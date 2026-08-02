@@ -8,24 +8,29 @@ data_acquisition:
   prohibited_fields: synthetic cardholder-like identifiers and location/address fields; allowlisted analytical schema only
 analyst_only_decision_boundary: approved
 repository:
-  status: approved-pending-authentication
+  status: provisioned
   owner: vaibhavkhuranaaa
   visibility: public
   purpose: personal hiring-manager portfolio
-  precondition: re-authenticate local GitHub CLI before creation
+  url: https://github.com/vaibhavkhuranaaa/payments-fraud-risk-data-platform
 cloud:
-  status: approved-pending-provisioning
+  status: partially-provisioned
   database:
     provider: Supabase Free
     region: us-east-2
     hosted_data: aggregate publication table and evaluation evidence only
+    project_ref: elhhydpltongfdziroio
+    status: provisioned-and-verified
   api:
     provider: Render Free
     exposure: public aggregate API protected by server-to-server key
+    status: approved-pending-provisioning
   dashboard:
     provider: Vercel Hobby
     exposure: public personal non-commercial portfolio
+    status: approved-pending-provisioning
   monthly_cost_cap_usd: 0
+  rollback_owner: Vaibhav Khurana
 publication:
   status: approved-pending-deployment
   limitation_copy: Free-tier services may pause or cold-start; this is an analyst-triage demonstration, not a payment-decision system.

@@ -33,6 +33,6 @@ evidence:
     status: verified
     artifact: docs/release-runbook.md
   - id: HOSTED-CONTRACT-01
-    claim: The deployable monitoring relation contains source-level aggregates only, and data endpoints require a server-only API key.
+    claim: The Supabase-hosted monitoring relation contains exactly two source-level aggregates only, and data endpoints require a server-only API key.
     status: verified
     artifact: migrations/003_public_demo_monitoring.sql

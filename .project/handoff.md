@@ -2,8 +2,8 @@
 
 ## Next action
 
-D4/M5 are complete and the free-first D5 profile is approved. The next action is to reauthenticate `gh` as `vaibhavkhuranaaa`, then create the approved public repository and proceed through provider provisioning. The hosted database must receive only the two-row `risk.public_demo_monitoring` publication, never `risk.events` or raw data.
+D4/M5 are complete and D5 is in progress. The approved public repository is live and the Supabase Free project `elhhydpltongfdziroio` in `us-east-2` has the verified two-row `risk.public_demo_monitoring` publication. The next action is to commit and push `render.yaml`, then provision the approved Render Free API with server-only `DATABASE_URL` and `API_KEY` values. The hosted database must never receive `risk.events` or raw data.
 
 ## Safety boundary
 
-Do not create a repository, deploy, use cloud or paid services, publish, or make payment-decision claims. Raw data remains Git-ignored and local-only; analytical inputs must comply with `contracts/sparkov-source.yml`.
+Do not use paid services, exceed the $0 monthly cap, host event-level or raw data, or make payment-decision claims. Raw data remains Git-ignored and local-only; analytical inputs must comply with `contracts/sparkov-source.yml`.

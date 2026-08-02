@@ -13,3 +13,10 @@ CREATE TABLE IF NOT EXISTS risk.public_demo_monitoring (
 ALTER TABLE risk.public_demo_monitoring ENABLE ROW LEVEL SECURITY;
 REVOKE ALL ON risk.public_demo_monitoring FROM PUBLIC;
 GRANT SELECT ON risk.public_demo_monitoring TO risk_api;
+DROP POLICY IF EXISTS deny_direct_table_access ON risk.public_demo_monitoring;
+CREATE POLICY deny_direct_table_access ON risk.public_demo_monitoring
+  AS RESTRICTIVE
+  FOR ALL
+  TO PUBLIC
+  USING (false)
+  WITH CHECK (false);
