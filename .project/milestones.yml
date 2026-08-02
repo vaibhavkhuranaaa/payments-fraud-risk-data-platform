@@ -1,0 +1,74 @@
+version: 1
+project: payments-fraud-risk-data-platform
+status: planned
+milestones:
+  - id: M0
+    title: Approve the public source and data contract
+    status: approved
+    acceptance:
+      - Select a license-verified public fraud source and record permitted use, attribution, and retention.
+      - Confirm analyst-triage-only scope and prohibition of payment blocking or approval.
+      - Confirm local-only storage, no GitHub, no deployment, and no paid services.
+  - id: M1
+    title: Acquire and validate the approved source
+    status: complete
+    acceptance:
+      - Record source URL, license, checksum, schema, class balance, and data-quality profile.
+      - Keep raw data ignored and block prohibited fields or schema drift.
+  - id: M2
+    title: Build the governed risk data pipeline
+    status: complete
+    acceptance:
+      - Validate typed events, idempotency, point-in-time feature availability, and lineage.
+      - Define deterministic synthetic fixtures for failure and recovery tests.
+  - id: M3
+    title: Evaluate fraud-risk models and monitoring
+    status: complete
+    acceptance:
+      - Compare baseline and challenger using PR-AUC, recall at fixed review capacity, calibration, and alert stability.
+      - Measure data-quality detection, failure recovery, and latency/cost.
+  - id: M4
+    title: Build the local analyst workflow
+    status: complete
+    acceptance:
+      - Provide aggregate queue monitoring, lineage, quality states, model card, and no-decision messaging.
+      - Verify accessible loading, empty, error, and refusal states.
+  - id: M5
+    title: Verify release readiness
+    status: complete
+    acceptance:
+      - Tests, evaluation, documentation, architecture, cost, and evidence records are current.
+      - A release decision is prepared without creating public exposure.
+  - id: D1
+    title: Replace the local analytics store with governed PostgreSQL
+    status: complete
+    acceptance:
+      - Versioned PostgreSQL migrations enforce the approved hosted-data allowlist and idempotency keys.
+      - Local integration tests verify migrations, prohibited-field exclusion, idempotent ingestion, and lineage.
+      - No raw source rows or prohibited source fields are loaded into PostgreSQL.
+  - id: D2
+    title: Deliver aggregate-only API and evaluation evidence
+    status: complete
+    acceptance:
+      - Baseline/challenger, calibration, and alert-volume evidence are reproducible from the approved PostgreSQL fields.
+      - The API exposes health, aggregate monitoring, and precomputed evaluation only.
+      - Tests prove that the aggregate reader cannot query event-level records.
+  - id: D3
+    title: Deliver the hiring-manager dashboard
+    status: complete
+    acceptance:
+      - The Next.js dashboard renders aggregate monitoring, evaluation evidence, governance limits, and source lineage.
+      - Loading and service-unavailable states are explicit.
+      - No event-level drill-down or decision/scoring workflow is exposed.
+  - id: D4
+    title: Prepare local release artifacts
+    status: complete
+    acceptance:
+      - Dockerfile, pinned runtime dependencies, environment contract, CI definition, and no-provisioning release runbook are present.
+      - Local tests, Compose configuration, dashboard lint, and production build are verified.
+  - id: D5
+    title: Provision and publish
+    status: in_progress
+    acceptance:
+      - Record provider, region, cost cap, repository, exposure, rollback, and teardown approval before any external resource is created.
+      - Verify deployed revisions only after the explicit D5 approval.

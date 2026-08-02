@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.env
+.DS_Store
+.venv/
+data/raw/
+data/warehouse/
+.vendor/
+dashboard/node_modules/
+dashboard/.next/

@@ -1,0 +1,7 @@
+flowchart LR
+  A["Checksum-pinned raw source"] --> B["Allowlist and typed validation"]
+  B --> C["Idempotent local PostgreSQL pipeline"]
+  C --> D["Prior-only PostgreSQL feature view"]
+  D --> E["Baseline and challenger evaluation"]
+  C --> F["Aggregate quality and lineage evidence"]
+  E --> G["Analyst triage only"]

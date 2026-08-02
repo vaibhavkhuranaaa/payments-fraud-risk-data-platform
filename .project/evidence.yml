@@ -1,0 +1,38 @@
+version: 1
+evidence:
+  - id: TERMS-01
+    claim: The selected fraud source's permitted use, attribution, and retention are recorded.
+    status: verified
+    artifact: .project/source-provenance.md
+  - id: SOURCE-01
+    claim: The approved source is checksum-pinned, schema-validated, temporally ordered, and constrained to an allowlisted analytical schema.
+    status: verified
+    artifact: data/validated/sparkov-source-profile.json
+  - id: DATA-01
+    claim: Event validation and point-in-time feature lineage are reproducible.
+    status: verified
+    artifact: migrations/001_governed_risk_schema.sql
+  - id: OPS-01
+    claim: Data-quality failures and recovery states are verified with deterministic fixtures.
+    status: verified
+    artifact: tests/test_postgres_integration.py
+  - id: EVAL-01
+    claim: Capacity-aware fraud evaluation, calibration, and alert stability are reproducible.
+    status: verified
+    artifact: data/validated/evaluation.json
+  - id: API-01
+    claim: The API exposes health, aggregate monitoring, and precomputed evaluation evidence without event-level public data.
+    status: verified
+    artifact: tests/test_api.py
+  - id: UI-01
+    claim: The dashboard renders aggregate evidence and has explicit loading and service-unavailable states.
+    status: verified
+    artifact: dashboard/src/app/page.tsx
+  - id: RELEASE-01
+    claim: A locked uv dependency contract, environment contract, CI definition, and no-provisioning release runbook are prepared.
+    status: verified
+    artifact: docs/release-runbook.md
+  - id: HOSTED-CONTRACT-01
+    claim: The deployable monitoring relation contains source-level aggregates only, and data endpoints require a server-only API key.
+    status: verified
+    artifact: migrations/003_public_demo_monitoring.sql

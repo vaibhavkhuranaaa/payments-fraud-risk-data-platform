@@ -1,0 +1,9 @@
+.git
+.vendor
+__pycache__
+*.py[cod]
+.env
+data/raw
+data/warehouse
+dashboard
+tests

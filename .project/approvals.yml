@@ -1,0 +1,47 @@
+version: 1
+architecture: approved
+data_acquisition:
+  status: approved
+  proposed_source: Sparkov simulated credit-card transactions (Kaggle; CC0 1.0)
+  allowed_action: local-only acquisition after source version, URL, license, attribution, checksum, and retention record are captured
+  retention: local project storage only; Git-ignored; delete on project retirement
+  prohibited_fields: synthetic cardholder-like identifiers and location/address fields; allowlisted analytical schema only
+analyst_only_decision_boundary: approved
+repository:
+  status: approved-pending-authentication
+  owner: vaibhavkhuranaaa
+  visibility: public
+  purpose: personal hiring-manager portfolio
+  precondition: re-authenticate local GitHub CLI before creation
+cloud:
+  status: approved-pending-provisioning
+  database:
+    provider: Supabase Free
+    region: us-east-2
+    hosted_data: aggregate publication table and evaluation evidence only
+  api:
+    provider: Render Free
+    exposure: public aggregate API protected by server-to-server key
+  dashboard:
+    provider: Vercel Hobby
+    exposure: public personal non-commercial portfolio
+  monthly_cost_cap_usd: 0
+publication:
+  status: approved-pending-deployment
+  limitation_copy: Free-tier services may pause or cold-start; this is an analyst-triage demonstration, not a payment-decision system.
+local_container_base_image:
+  status: approved-and-complete
+  image: python:3.12-slim
+  digest: sha256:57cd7c3a7a273101a6485ba99423ee568157882804b1124b4dd04266317710de
+  purpose: local Dockerfile verification only
+  external_resources_created: false
+local_container_build:
+  status: approved-and-complete
+  image: payments-risk-api:local
+  image_digest: sha256:97d2679f3c28364e989a4fc3e850d884c5dd1a0e24c28a7f14ab7236070cb34c
+  image_size_bytes: 83193785
+  verified_endpoints:
+    - /health
+    - /v1/monitoring
+    - /v1/evaluation
+  external_resources_created: false
