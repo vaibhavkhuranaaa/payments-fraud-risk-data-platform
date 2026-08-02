@@ -24,7 +24,9 @@ cloud:
   api:
     provider: Render Free
     exposure: public aggregate API protected by server-to-server key
-    status: approved-pending-provisioning
+    status: provisioned-pending-protected-contract-verification
+    region: ohio
+    url: https://payments-risk-api.onrender.com
   dashboard:
     provider: Vercel Hobby
     exposure: public personal non-commercial portfolio
