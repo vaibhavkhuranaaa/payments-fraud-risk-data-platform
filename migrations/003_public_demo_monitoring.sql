@@ -14,9 +14,8 @@ ALTER TABLE risk.public_demo_monitoring ENABLE ROW LEVEL SECURITY;
 REVOKE ALL ON risk.public_demo_monitoring FROM PUBLIC;
 GRANT SELECT ON risk.public_demo_monitoring TO risk_api;
 DROP POLICY IF EXISTS deny_direct_table_access ON risk.public_demo_monitoring;
-CREATE POLICY deny_direct_table_access ON risk.public_demo_monitoring
-  AS RESTRICTIVE
-  FOR ALL
-  TO PUBLIC
-  USING (false)
-  WITH CHECK (false);
+DROP POLICY IF EXISTS api_reader_can_read_monitoring ON risk.public_demo_monitoring;
+CREATE POLICY api_reader_can_read_monitoring ON risk.public_demo_monitoring
+  FOR SELECT
+  TO risk_api
+  USING (true);
