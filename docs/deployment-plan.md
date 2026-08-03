@@ -24,14 +24,14 @@ The deployed system is an analyst-triage demonstration. It never blocks, approve
 - **Public dashboard:** aggregate metrics and synthetic examples only. No event-level records or scoring endpoint.
 - **API:** read-only aggregate endpoints; service credential is server-side only; least-privilege database role; health endpoint contains no data.
 
-## Proposed deployment decision for D5
+## Approved deployment decision for D5
 
 - Managed PostgreSQL: Supabase Postgres, with migrations, a non-public application schema, least-privilege roles, and RLS enabled for any exposed schema.
 - API: FastAPI container on Render, private database connection string held only in platform secrets.
 - Dashboard: Next.js on Vercel; requests only aggregate API responses.
 - Release safeguards: protected default branch, CI gates, health check, immutable migration history, rollback to prior service revision, and provider-resource teardown on project retirement.
 
-This is a proposed architecture only. No repository, provider account, cloud database, service, public URL, or cost has been approved or created.
+The approved providers are now provisioned: GitHub public repository, Supabase Free project `elhhydpltongfdziroio` in Ohio, Render Free API at `https://payments-risk-api.onrender.com`, and Vercel Hobby dashboard at `https://payments-fraud-risk-dashboard.vercel.app`. The dashboard remains pending runtime verification until its server-only API configuration is completed.
 
 ## Proposed free-first portfolio profile
 

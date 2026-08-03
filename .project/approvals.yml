@@ -30,11 +30,13 @@ cloud:
   dashboard:
     provider: Vercel Hobby
     exposure: public personal non-commercial portfolio
-    status: approved-pending-provisioning
+    status: provisioned-pending-runtime-configuration-and-verification
+    region: iad1
+    url: https://payments-fraud-risk-dashboard.vercel.app
   monthly_cost_cap_usd: 0
   rollback_owner: Vaibhav Khurana
 publication:
-  status: approved-pending-deployment
+  status: pending-protected-contract-verification
   limitation_copy: Free-tier services may pause or cold-start; this is an analyst-triage demonstration, not a payment-decision system.
 local_container_base_image:
   status: approved-and-complete

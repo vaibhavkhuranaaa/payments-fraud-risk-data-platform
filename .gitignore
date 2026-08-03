@@ -6,5 +6,6 @@ __pycache__/
 data/raw/
 data/warehouse/
 .vendor/
+graphify-out/
 dashboard/node_modules/
 dashboard/.next/
