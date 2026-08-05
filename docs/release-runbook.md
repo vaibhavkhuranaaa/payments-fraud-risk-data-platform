@@ -36,4 +36,4 @@ Record all of the following in `.project/approvals.yml` before creating anything
 - Database: stop application traffic before a restore. Use a provider snapshot only under the approved retention policy.
 - Retirement: remove dashboard, API, database, service credentials, and provider logs according to the approved retention plan. Delete the local raw source separately, because it is never hosted.
 
-This file does not authorize any provider action. D5 remains a human decision gate.
+This file does not authorize provider changes beyond the completed D5 release. Any future provider action remains a human decision gate.

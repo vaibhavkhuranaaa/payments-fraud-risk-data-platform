@@ -31,7 +31,16 @@ The deployed system is an analyst-triage demonstration. It never blocks, approve
 - Dashboard: Next.js on Vercel; requests only aggregate API responses.
 - Release safeguards: protected default branch, CI gates, health check, immutable migration history, rollback to prior service revision, and provider-resource teardown on project retirement.
 
-The approved providers are now provisioned: GitHub public repository, Supabase Free project `elhhydpltongfdziroio` in Ohio, Render Free API at `https://payments-risk-api.onrender.com`, and Vercel Hobby dashboard at `https://payments-fraud-risk-dashboard.vercel.app`. The dashboard remains pending runtime verification until its server-only API configuration is completed.
+The approved providers are now provisioned: GitHub public repository, Supabase Free project `elhhydpltongfdziroio` in Ohio, Render Free API at `https://payments-risk-api.onrender.com`, and Vercel Hobby dashboard at `https://payments-fraud-risk-dashboard.vercel.app`.
+
+## Verified protected runtime contract (2026-08-04)
+
+- Render's server-only API key was rotated and Render redeployed revision `d1f8db2`; the public, non-data `/health` endpoint returned HTTP 200 with `{"status":"ok"}`.
+- Vercel Production holds `API_BASE_URL=https://payments-risk-api.onrender.com` and a masked `RISK_API_KEY`; neither is browser-visible and the key is not recorded in this repository.
+- Vercel Production deployment `BdM84XXscBy894334KVNYshPkGWK` is ready. It renders exactly the two approved aggregate source partitions and precomputed evaluation evidence through the protected API.
+- The verified page has no raw source, event-level record, drill-down, score endpoint, or payment-decision workflow. The $0/month cap remains in force; no paid resource or payment method was added.
+
+D5 is complete: the approved free-tier providers, protected aggregate-only runtime contract, and deployed revisions have been verified. Any expansion beyond this published demonstration requires a new written approval.
 
 ## Proposed free-first portfolio profile
 

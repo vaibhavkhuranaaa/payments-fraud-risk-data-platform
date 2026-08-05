@@ -1,6 +1,6 @@
 version: 1
 project: payments-fraud-risk-data-platform
-status: planned
+status: remediation_deployment_approved
 milestones:
   - id: M0
     title: Approve the public source and data contract
@@ -68,7 +68,15 @@ milestones:
       - Local tests, Compose configuration, dashboard lint, and production build are verified.
   - id: D5
     title: Provision and publish
-    status: in_progress
+    status: complete
     acceptance:
       - Record provider, region, cost cap, repository, exposure, rollback, and teardown approval before any external resource is created.
       - Verify deployed revisions only after the explicit D5 approval.
+  - id: R1
+    title: Remediate the public dashboard experience
+    status: approved_for_deployment
+    acceptance:
+      - Demonstrate a deterministic synthetic live-review simulation without exposing hosted event-level data or scoring behavior.
+      - Explain chronological evaluation, calibration, review-capacity alert volumes, and the limited class-weighted logistic-regression challenger.
+      - Add accessible workflow, lineage, calibration, alert-volume, and model-comparison visuals with explicit loading, unavailable, empty, and refusal states.
+      - Complete local verification, Graphify refresh, and design review before requesting a deployment approval.

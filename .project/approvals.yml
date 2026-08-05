@@ -14,7 +14,7 @@ repository:
   purpose: personal hiring-manager portfolio
   url: https://github.com/vaibhavkhuranaaa/payments-fraud-risk-data-platform
 cloud:
-  status: partially-provisioned
+  status: provisioned-and-runtime-verified
   database:
     provider: Supabase Free
     region: us-east-2
@@ -24,20 +24,29 @@ cloud:
   api:
     provider: Render Free
     exposure: public aggregate API protected by server-to-server key
-    status: provisioned-pending-protected-contract-verification
+    status: provisioned-and-runtime-verified
     region: ohio
     url: https://payments-risk-api.onrender.com
   dashboard:
     provider: Vercel Hobby
     exposure: public personal non-commercial portfolio
-    status: provisioned-pending-runtime-configuration-and-verification
+    status: provisioned-and-runtime-verified
     region: iad1
     url: https://payments-fraud-risk-dashboard.vercel.app
   monthly_cost_cap_usd: 0
   rollback_owner: Vaibhav Khurana
 publication:
-  status: pending-protected-contract-verification
+  status: published-and-runtime-verified
   limitation_copy: Free-tier services may pause or cold-start; this is an analyst-triage demonstration, not a payment-decision system.
+remediation_r1:
+  status: approved-for-production-deployment
+  approved_on: 2026-08-04
+  scope: Local dashboard redesign, deterministic synthetic live simulation, and clearer aggregate evaluation explanation.
+  authorized_action: Deploy the reviewed dashboard revision to the existing Vercel project only.
+  constraints:
+    - Keep the $0 monthly cost cap and existing providers.
+    - Do not host raw or event-level data, identifiers, scores, scoring endpoints, payment decisions, or payment-processing behavior.
+    - Simulation data is deterministic, generated in the browser, and labelled synthetic.
 local_container_base_image:
   status: approved-and-complete
   image: python:3.12-slim

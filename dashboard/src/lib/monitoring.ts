@@ -18,6 +18,12 @@ export type EvaluationModel = {
   brier_score: number;
   alert_volume: number;
   alert_volume_by_month: Record<string, number>;
+  calibration_bins: Array<{
+    low: number;
+    high: number;
+    count: number;
+    observed_rate: number | null;
+  }>;
 };
 
 export type Evaluation = {

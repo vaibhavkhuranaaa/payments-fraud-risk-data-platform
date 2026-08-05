@@ -2,14 +2,14 @@
 
 ## Next action
 
-D4/M5 are complete and D5 is in progress. The approved public repository is live; the Supabase Free project `elhhydpltongfdziroio` in `us-east-2` has the verified two-row `risk.public_demo_monitoring` publication; the Render Free API is live at https://payments-risk-api.onrender.com; and the Vercel production dashboard is live at https://payments-fraud-risk-dashboard.vercel.app.
+All approved milestones through D5 are complete. The approved public repository is live; the Supabase Free project `elhhydpltongfdziroio` in `us-east-2` has the verified two-row `risk.public_demo_monitoring` publication; the Render Free API is live at https://payments-risk-api.onrender.com; and the Vercel production dashboard is live at https://payments-fraud-risk-dashboard.vercel.app. On 2026-08-04 the Render server-only API key was rotated, revision `d1f8db2` was redeployed, `/health` returned 200, and Vercel Production deployment `BdM84XXscBy894334KVNYshPkGWK` successfully rendered the aggregate dashboard through the protected API contract.
 
 ## Exact next action
 
-1. In Render, set a new strong `API_KEY` and redeploy the API. Verify `GET /health` returns 200 and `GET /v1/monitoring` with the matching `X-API-Key` returns only two source-level aggregate rows.
-2. In Vercel Production, set `API_BASE_URL=https://payments-risk-api.onrender.com` and `RISK_API_KEY` to that exact Render key, then redeploy.
-3. Verify the Vercel dashboard renders aggregate monitoring and evaluation evidence rather than its unavailable state. Confirm no browser-visible secret, raw source, event-level row, or scoring workflow exists.
-4. Update `.project/approvals.yml`, `.project/state.md`, `.project/evidence.yml`, and this handoff with the verified revisions and URLs; run `uv run --frozen --group dev python scripts/project_kit.py check` before declaring D5 complete.
+1. R1 is approved for deployment to the existing Vercel project only. Deploy the reviewed revision, verify its production URL and aggregate-only runtime contract, then record the deployment ID and completion evidence.
+2. Retain the API key only in Render and Vercel's Production secret stores. If it must be rotated, redeploy Render first, update Vercel's matching masked `RISK_API_KEY`, then redeploy Vercel and repeat the aggregate-only verification.
+3. Preserve the $0 monthly cap and the two-row aggregate-only Supabase relation. Do not add raw events, personal data, scoring, or payment-decision functionality.
+4. Run `uv run --frozen --group dev python scripts/project_kit.py check` after any future record change.
 
 ## Safety boundary
 

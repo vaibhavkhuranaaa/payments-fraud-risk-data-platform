@@ -2,7 +2,7 @@
 
 ## Approved status
 
-- Status: `approved — local-first architecture; M2 pipeline verified`
+- Status: `approved — local-first architecture; D5 free-tier publication verified`
 - Initial delivery: local PostgreSQL, FastAPI, and a local Next.js analytical dashboard
 - Cloud authority: none
 
@@ -29,6 +29,10 @@ No fraud dataset is selected or downloaded until its license, terms, retention, 
 
 The full first release is local. Any repository, hosted endpoint, scheduled job, warehouse, or public demo requires a separate approval with owner, cost cap, exposure, rollback, and teardown plan.
 
-## Proposed deployment evolution
+## Verified deployment evolution
 
-The approved target design is documented in `docs/deployment-plan.md`: managed PostgreSQL for approved analytical and aggregate tables, FastAPI for read-only aggregate APIs, and Next.js for the dashboard. PostgreSQL has replaced DuckDB as the local and target deployment storage engine. Cloud provisioning and publication remain unapproved.
+The verified deployment is documented in `docs/deployment-plan.md`: Supabase Free hosts only the two approved aggregate monitoring rows; a Render Free FastAPI service exposes read-only aggregate APIs behind a server-to-server key; and a Vercel Hobby dashboard renders the aggregate contract. PostgreSQL has replaced DuckDB as the local and target deployment storage engine. The $0 monthly cost cap, analyst-triage-only boundary, and no-raw-data boundary remain in force.
+
+## Proposed R1 dashboard remediation (local only)
+
+The dashboard may generate a deterministic, browser-only synthetic review stream. It is not fetched from the API, persisted, scored, or associated with a payment. This preserves the deployed aggregate-only contract while allowing an interactive demonstration of queue review language and refusal boundaries. R1 does not authorize any provider, hosted-data, exposure, or cost change.

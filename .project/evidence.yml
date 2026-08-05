@@ -36,3 +36,15 @@ evidence:
     claim: The Supabase-hosted monitoring relation contains exactly two source-level aggregates only, and data endpoints require a server-only API key.
     status: verified
     artifact: migrations/003_public_demo_monitoring.sql
+  - id: HOSTED-CONTRACT-02
+    claim: The Render API health check and the Vercel Production dashboard were verified after a server-only API-key rotation; the dashboard renders exactly two aggregate source partitions and precomputed evaluation evidence.
+    status: verified
+    artifact: docs/deployment-plan.md
+  - id: D5-01
+    claim: The approved free-tier providers, exposure boundaries, and deployed revisions satisfy the D5 provisioning-and-publication acceptance criteria.
+    status: verified
+    artifact: .project/approvals.yml
+  - id: R1-LOCAL-01
+    claim: The local dashboard presents deterministic browser-generated synthetic signals, aggregate-only lineage, calibration, alert-volume, and model-comparison evidence without a public scoring or decision workflow.
+    status: verified-local-only
+    artifact: dashboard/src/app/page.tsx
