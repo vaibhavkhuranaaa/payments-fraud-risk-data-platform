@@ -1,6 +1,6 @@
 version: 1
 project: payments-fraud-risk-data-platform
-status: remediation_deployment_approved
+status: complete
 milestones:
   - id: M0
     title: Approve the public source and data contract
@@ -74,7 +74,7 @@ milestones:
       - Verify deployed revisions only after the explicit D5 approval.
   - id: R1
     title: Remediate the public dashboard experience
-    status: approved_for_deployment
+    status: complete
     acceptance:
       - Demonstrate a deterministic synthetic live-review simulation without exposing hosted event-level data or scoring behavior.
       - Explain chronological evaluation, calibration, review-capacity alert volumes, and the limited class-weighted logistic-regression challenger.

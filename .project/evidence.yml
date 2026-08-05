@@ -48,3 +48,7 @@ evidence:
     claim: The local dashboard presents deterministic browser-generated synthetic signals, aggregate-only lineage, calibration, alert-volume, and model-comparison evidence without a public scoring or decision workflow.
     status: verified-local-only
     artifact: dashboard/src/app/page.tsx
+  - id: R1-PROD-01
+    claim: The approved R1 dashboard is live on the existing Vercel project, serves the aggregate-only evidence desk, and had no Vercel runtime errors in the initial post-deployment scan.
+    status: verified
+    artifact: .project/approvals.yml
