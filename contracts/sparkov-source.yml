@@ -1,0 +1,58 @@
+version: 1
+source: kartik2112/fraud-detection
+source_version: 1
+raw_files:
+  - fraudTrain.csv
+  - fraudTest.csv
+required_source_columns:
+  - ""
+  - trans_date_trans_time
+  - cc_num
+  - merchant
+  - category
+  - amt
+  - first
+  - last
+  - gender
+  - street
+  - city
+  - state
+  - zip
+  - lat
+  - long
+  - city_pop
+  - job
+  - dob
+  - trans_num
+  - unix_time
+  - merch_lat
+  - merch_long
+  - is_fraud
+analytical_allowlist:
+  - trans_date_trans_time
+  - merchant
+  - category
+  - amt
+  - is_fraud
+label_column: is_fraud
+label_values: [0, 1]
+timestamp_column: trans_date_trans_time
+prohibited_analytical_fields:
+  - ""
+  - cc_num
+  - first
+  - last
+  - gender
+  - street
+  - city
+  - state
+  - zip
+  - lat
+  - long
+  - city_pop
+  - job
+  - dob
+  - trans_num
+  - unix_time
+  - merch_lat
+  - merch_long

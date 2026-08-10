@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "slug": "payments-fraud-risk-data-platform",
+  "title": "Payments Fraud Risk Data Platform",
+  "status": "draft",
+  "source": {
+    "dataBoundary": "Public, license-verified fraud data only after approval. Candidate sources require a documented license and retention review; synthetic fixtures are permitted for deterministic tests."
+  },
+  "evidence": []
+}

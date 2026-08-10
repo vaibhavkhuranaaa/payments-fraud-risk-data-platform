@@ -1,0 +1,72 @@
+version: 1
+architecture: approved
+data_acquisition:
+  status: approved
+  proposed_source: Sparkov simulated credit-card transactions (Kaggle; CC0 1.0)
+  allowed_action: local-only acquisition after source version, URL, license, attribution, checksum, and retention record are captured
+  retention: local project storage only; Git-ignored; delete on project retirement
+  prohibited_fields: synthetic cardholder-like identifiers and location/address fields; allowlisted analytical schema only
+analyst_only_decision_boundary: approved
+repository:
+  status: provisioned
+  owner: vaibhavkhuranaaa
+  visibility: public
+  purpose: personal hiring-manager portfolio
+  url: https://github.com/vaibhavkhuranaaa/payments-fraud-risk-data-platform
+cloud:
+  status: provisioned-and-runtime-verified
+  database:
+    provider: Supabase Free
+    region: us-east-2
+    hosted_data: aggregate publication table and evaluation evidence only
+    project_ref: elhhydpltongfdziroio
+    status: provisioned-and-verified
+  api:
+    provider: Render Free
+    exposure: public aggregate API protected by server-to-server key
+    status: provisioned-and-runtime-verified
+    region: ohio
+    url: https://payments-risk-api.onrender.com
+  dashboard:
+    provider: Vercel Hobby
+    exposure: public personal non-commercial portfolio
+    status: provisioned-and-runtime-verified
+    region: iad1
+    url: https://payments-fraud-risk-dashboard.vercel.app
+  monthly_cost_cap_usd: 0
+  rollback_owner: Vaibhav Khurana
+publication:
+  status: published-and-runtime-verified
+  limitation_copy: Free-tier services may pause or cold-start; this is an analyst-triage demonstration, not a payment-decision system.
+remediation_r1:
+  status: deployed-and-runtime-verified
+  approved_on: 2026-08-04
+  scope: Local dashboard redesign, deterministic synthetic live simulation, and clearer aggregate evaluation explanation.
+  authorized_action: Deploy the reviewed dashboard revision to the existing Vercel project only.
+  constraints:
+    - Keep the $0 monthly cost cap and existing providers.
+    - Do not host raw or event-level data, identifiers, scores, scoring endpoints, payment decisions, or payment-processing behavior.
+    - Simulation data is deterministic, generated in the browser, and labelled synthetic.
+  deployment:
+    provider: Vercel Hobby
+    project: payments-fraud-risk-dashboard
+    deployment_id: dpl_2q8s16KyeB8DjqJC6opq6YEisTqk
+    url: https://payments-fraud-risk-dashboard.vercel.app
+    revision: d33f46170f8e7cb37581f4526844a7723c3cdf36
+    status: ready-and-verified
+local_container_base_image:
+  status: approved-and-complete
+  image: python:3.12-slim
+  digest: sha256:57cd7c3a7a273101a6485ba99423ee568157882804b1124b4dd04266317710de
+  purpose: local Dockerfile verification only
+  external_resources_created: false
+local_container_build:
+  status: approved-and-complete
+  image: payments-risk-api:local
+  image_digest: sha256:97d2679f3c28364e989a4fc3e850d884c5dd1a0e24c28a7f14ab7236070cb34c
+  image_size_bytes: 83193785
+  verified_endpoints:
+    - /health
+    - /v1/monitoring
+    - /v1/evaluation
+  external_resources_created: false
