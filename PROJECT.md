@@ -2,23 +2,24 @@
 
 ## Portfolio contract
 
-- **Category / industry:** data engineering / Payments Risk Data
-- **Industry question:** How can a governed transaction-risk data product validate events, create leakage-safe features, monitor quality, and support analyst triage?
-- **Owner-facing user and decision:** Payments-risk analyst reviews aggregate risk alerts and data-quality exceptions; no transaction is automatically blocked or approved.
-- **Data classification:** Public, license-verified fraud data only after approval. Candidate sources require a documented license and retention review; synthetic fixtures are permitted for deterministic tests.
-- **Demo status:** Planned local-first data product. No public exposure or payment-processing claim before approval and release verification.
-- **First-demo workflow:** Ingest a checksum-pinned approved source, validate a typed event contract, build point-in-time features, compare baseline/challenger fraud scores, and surface aggregate monitoring plus failure states.
+- **Category / industry:** data engineering, data science, and data analysis / payments risk
+- **Industry question:** How can a governed fraud-risk data product validate events, build point-in-time features, compare model policies, and support a capacity-aware analyst queue?
+- **Owner-facing user and decision:** A payments-risk analyst selects a measured review policy, inspects aggregate monitoring, and queries the complete allowlisted simulated event register. No payment is automatically blocked, approved, declined, or investigated.
+- **Data classification:** Public simulated source processed locally under a recorded CC0 1.0 listing. Raw files and synthetic cardholder-like fields are never published.
+- **Demo status:** Full-row release candidate verified locally and approved for publication on the existing $0 service profile.
+- **First-demo workflow:** Validate a source, load approved fields idempotently, build prior-row features, evaluate policies chronologically, inspect monitoring, and query all allowlisted event rows through bounded read-only controls.
 - **Public URL target:** `/projects/payments-fraud-risk-data-platform`
-- **GitHub repository:** Not requested. Local-only until a human approves repository creation and publication.
+- **Repository:** `https://github.com/vaibhavkhuranaaa/payments-fraud-risk-data-platform`
+- **Demo:** `https://payments-fraud-risk-dashboard.vercel.app`
 
 ## Success criteria
 
-1. A reviewer can reproduce event validation, idempotent processing, point-in-time feature generation, model evaluation, and data-quality monitoring locally.
-2. Evaluation reports PR-AUC, recall at a fixed review rate, calibration, alert-volume stability, data-quality failure recovery, and latency/cost evidence.
-3. The project documents source licensing, retention, prohibited fields, data lineage, analyst-only decision boundaries, and model limitations.
+1. A reviewer can reproduce source validation, idempotent processing, point-in-time features, chronological evaluation, aggregate monitoring, and all-row publication locally.
+2. Evaluation reports PR-AUC, recall at a fixed review rate, Brier score, calibration, monthly alert volume, failure behavior, and local runtime.
+3. The interface supports exact filters and cursor pagination over 1,852,394 allowlisted event records without exposing identity-like source fields, scores, or payment actions.
+4. Public documentation states source licensing, retention, prohibited fields, lineage, analyst-only boundaries, and model limitations.
+5. CI verifies migrations, PostgreSQL privileges, public read-only API contracts, unit logic, dashboard lint, and production build.
 
-## Delivery constraints
+## Release boundary
 
-- Candidate datasets such as IEEE-CIS or OpenML must not be downloaded until licensing and terms are recorded and approved.
-- Do not deploy, create a repository, obtain paid services, or download data until the corresponding `.project/approvals.yml` entry is explicitly approved.
-- Public materials must use aggregate metrics and synthetic fixtures unless source terms explicitly permit disclosure.
+Publication on the existing free services is approved. Provider changes, paid infrastructure, public visibility changes, and cost increases require separate approval.

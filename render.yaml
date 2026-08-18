@@ -5,12 +5,10 @@ services:
     plan: free
     region: ohio
     branch: main
-    autoDeploy: true
+    autoDeploy: false
     dockerfilePath: ./Dockerfile
     dockerContext: .
     healthCheckPath: /health
     envVars:
       - key: DATABASE_URL
-        sync: false
-      - key: API_KEY
         sync: false

@@ -8,7 +8,7 @@ COPY --from=uv /uv /uvx /bin/
 COPY pyproject.toml uv.lock ./
 RUN uv sync --frozen --no-dev --no-install-project
 
-COPY src ./src
+COPY src/__init__.py src/api.py ./src/
 COPY data/validated/evaluation.json ./data/validated/evaluation.json
 
 EXPOSE 8000

@@ -1,35 +1,44 @@
 {
   "split": "chronological source train/test",
   "review_rate": 0.01,
+  "holdout_rows": 555719,
+  "features": [
+    "amount",
+    "merchant",
+    "category",
+    "merchant_prior_transaction_count",
+    "merchant_prior_amount_mean",
+    "category_prior_transaction_count"
+  ],
   "models": {
     "baseline": {
-      "pr_auc": 0.16363392745556157,
-      "recall_at_review_rate": 0.5608391608391609,
-      "brier_score": 0.004030726097829034,
+      "pr_auc": 0.15994693158012935,
+      "recall_at_review_rate": 0.5128205128205128,
+      "brier_score": 0.004042453962457449,
       "alert_volume": 5557,
       "calibration_bins": [
         {
           "low": 0.0,
           "high": 0.1,
-          "count": 554161,
-          "observed_rate": 0.0030153691797149204
+          "count": 554396,
+          "observed_rate": 0.003217916435183515
         },
         {
           "low": 0.1,
           "high": 0.2,
-          "count": 873,
-          "observed_rate": 0.5166093928980527
+          "count": 745,
+          "observed_rate": 0.4818791946308725
         },
         {
           "low": 0.2,
           "high": 0.3,
-          "count": 201,
-          "observed_rate": 0.11442786069651742
+          "count": 131,
+          "observed_rate": 0.015267175572519083
         },
         {
           "low": 0.3,
           "high": 0.4,
-          "count": 94,
+          "count": 86,
           "observed_rate": 0.0
         },
         {
@@ -41,121 +50,121 @@
         {
           "low": 0.5,
           "high": 0.6,
-          "count": 52,
+          "count": 46,
           "observed_rate": 0.0
         },
         {
           "low": 0.6,
           "high": 0.7,
-          "count": 49,
+          "count": 29,
           "observed_rate": 0.0
         },
         {
           "low": 0.7,
           "high": 0.8,
-          "count": 22,
+          "count": 28,
           "observed_rate": 0.0
         },
         {
           "low": 0.8,
           "high": 0.9,
-          "count": 39,
+          "count": 40,
           "observed_rate": 0.0
         },
         {
           "low": 0.9,
           "high": 1.0,
-          "count": 167,
+          "count": 157,
           "observed_rate": 0.0
         }
       ],
       "alert_volume_by_month": {
-        "2020-06": 323,
-        "2020-07": 807,
-        "2020-08": 941,
-        "2020-09": 761,
-        "2020-10": 771,
-        "2020-11": 723,
-        "2020-12": 1231
+        "2020-06": 349,
+        "2020-07": 837,
+        "2020-08": 969,
+        "2020-09": 759,
+        "2020-10": 742,
+        "2020-11": 690,
+        "2020-12": 1211
       }
     },
     "challenger": {
-      "pr_auc": 0.11347056409129881,
-      "recall_at_review_rate": 0.4536130536130536,
-      "brier_score": 0.09293400197287803,
+      "pr_auc": 0.1119652197832344,
+      "recall_at_review_rate": 0.4540792540792541,
+      "brier_score": 0.0766933014123528,
       "alert_volume": 5557,
       "calibration_bins": [
         {
           "low": 0.0,
           "high": 0.1,
-          "count": 201148,
-          "observed_rate": 0.00022868733469882873
+          "count": 224621,
+          "observed_rate": 0.000267116609755989
         },
         {
           "low": 0.1,
           "high": 0.2,
-          "count": 92912,
-          "observed_rate": 0.0011623902187015672
+          "count": 94034,
+          "observed_rate": 0.0014143820320309676
         },
         {
           "low": 0.2,
           "high": 0.3,
-          "count": 77732,
-          "observed_rate": 0.0019683013430762107
+          "count": 83438,
+          "observed_rate": 0.002181260337016707
         },
         {
           "low": 0.3,
           "high": 0.4,
-          "count": 68272,
-          "observed_rate": 0.0022556831497539255
+          "count": 65919,
+          "observed_rate": 0.0023513706215203506
         },
         {
           "low": 0.4,
           "high": 0.5,
-          "count": 51435,
-          "observed_rate": 0.0016914552347623215
+          "count": 45016,
+          "observed_rate": 0.0007552870090634441
         },
         {
           "low": 0.5,
           "high": 0.6,
-          "count": 36691,
-          "observed_rate": 0.0008721484832792782
+          "count": 25148,
+          "observed_rate": 0.0009941148401463337
         },
         {
           "low": 0.6,
           "high": 0.7,
-          "count": 15527,
-          "observed_rate": 0.0015456945965093064
+          "count": 7319,
+          "observed_rate": 0.003962289930318349
         },
         {
           "low": 0.7,
           "high": 0.8,
-          "count": 3538,
-          "observed_rate": 0.024024872809496892
+          "count": 2405,
+          "observed_rate": 0.08482328482328483
         },
         {
           "low": 0.8,
           "high": 0.9,
-          "count": 2291,
-          "observed_rate": 0.18638149279790484
+          "count": 1944,
+          "observed_rate": 0.16872427983539096
         },
         {
           "low": 0.9,
           "high": 1.0,
-          "count": 6173,
-          "observed_rate": 0.1666936659646849
+          "count": 5875,
+          "observed_rate": 0.16936170212765958
         }
       ],
       "alert_volume_by_month": {
-        "2020-06": 340,
-        "2020-07": 845,
-        "2020-08": 887,
-        "2020-09": 749,
-        "2020-10": 746,
-        "2020-11": 699,
-        "2020-12": 1291
+        "2020-06": 343,
+        "2020-07": 853,
+        "2020-08": 894,
+        "2020-09": 745,
+        "2020-10": 747,
+        "2020-11": 692,
+        "2020-12": 1283
       }
     }
   },
-  "elapsed_seconds": 8.613
+  "elapsed_seconds": 24.73
 }

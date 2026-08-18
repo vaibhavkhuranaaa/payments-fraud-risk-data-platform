@@ -1,10 +1,49 @@
 {
-  "version": 1,
+  "version": 2,
   "slug": "payments-fraud-risk-data-platform",
   "title": "Payments Fraud Risk Data Platform",
-  "status": "draft",
+  "status": "release-candidate",
+  "summary": "Governed local-first fraud-risk monitoring and capacity-aware analyst triage over a simulated source.",
+  "outcome": "Retain the ordinary logistic baseline for the measured 1% review queue; reject the class-weighted challenger.",
+  "repositoryUrl": "https://github.com/vaibhavkhuranaaa/payments-fraud-risk-data-platform",
+  "liveUrl": "https://payments-fraud-risk-dashboard.vercel.app",
+  "license": "MIT",
+  "topics": [
+    "data-engineering",
+    "fraud-detection",
+    "model-monitoring",
+    "postgresql",
+    "fastapi",
+    "nextjs"
+  ],
   "source": {
-    "dataBoundary": "Public, license-verified fraud data only after approval. Candidate sources require a documented license and retention review; synthetic fixtures are permitted for deterministic tests."
+    "name": "Sparkov simulated credit-card transactions",
+    "license": "CC0 1.0",
+    "rows": 1852394,
+    "dataBoundary": "All 1,852,394 simulated events are public through an allowlisted seven-column view. Raw files, identity-like source fields, features, scores, and payment actions remain excluded."
   },
-  "evidence": []
+  "metrics": {
+    "baselinePrAuc": 0.15994693158012935,
+    "challengerPrAuc": 0.1119652197832344,
+    "baselineRecallAtOnePercent": 0.5128205128205128,
+    "challengerRecallAtOnePercent": 0.4540792540792541,
+    "baselineBrier": 0.004042453962457449,
+    "challengerBrier": 0.0766933014123528,
+    "reviewSlots": 5557
+  },
+  "evidence": [
+    "docs/images/dashboard-overview.png",
+    "docs/images/dashboard-event-query.png",
+    "docs/images/dashboard-mobile.png",
+    "data/validated/evaluation.json",
+    "data/validated/pipeline-validation.json",
+    "docs/architecture.md",
+    "docs/metric-glossary.md"
+  ],
+  "limitations": [
+    "Simulated 2019 to 2020 source",
+    "One chronological holdout without confidence intervals",
+    "No live scoring or payment decision",
+    "No fairness analysis or threshold sweep"
+  ]
 }
