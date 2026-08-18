@@ -11,9 +11,12 @@ from fastapi.testclient import TestClient
 class ApiTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        with psycopg.connect(os.environ["DATABASE_URL"]) as connection:
+        with (
+            psycopg.connect(os.environ["DATABASE_URL"]) as connection,
+            connection.cursor() as cursor,
+        ):
             if not connection.execute("SELECT count(*) FROM risk.events").fetchone()[0]:
-                connection.executemany(
+                cursor.executemany(
                     """
                     INSERT INTO risk.events
                       (event_id, event_ts, merchant, category, amount, is_fraud,
@@ -56,15 +59,15 @@ class ApiTests(unittest.TestCase):
             if not connection.execute(
                 "SELECT count(*) FROM risk.public_event_store"
             ).fetchone()[0]:
-                connection.executemany(
+                cursor.executemany(
                     "INSERT INTO risk.public_merchants (merchant_id, merchant) VALUES (%s, %s)",
                     [(1, "fraud_Test One"), (2, "fraud_Test Two"), (3, "fraud_Test Three")],
                 )
-                connection.executemany(
+                cursor.executemany(
                     "INSERT INTO risk.public_categories (category_id, category) VALUES (%s, %s)",
                     [(1, "other"), (2, "test")],
                 )
-                connection.executemany(
+                cursor.executemany(
                     """
                     INSERT INTO risk.public_event_store
                       (event_id, event_ts, merchant_id, category_id, amount_cents,
@@ -80,7 +83,7 @@ class ApiTests(unittest.TestCase):
             if not connection.execute(
                 "SELECT count(*) FROM risk.public_demo_monitoring"
             ).fetchone()[0]:
-                connection.executemany(
+                cursor.executemany(
                     """
                     INSERT INTO risk.public_demo_monitoring
                       (source_file, event_count, fraud_count, fraud_rate,
