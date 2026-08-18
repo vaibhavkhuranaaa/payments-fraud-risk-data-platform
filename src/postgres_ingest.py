@@ -13,7 +13,6 @@ from pathlib import Path
 import psycopg
 from psycopg.rows import dict_row
 
-
 SOURCE = "kartik2112/fraud-detection"
 SOURCE_VERSION = 1
 ALLOWED = ("trans_date_trans_time", "merchant", "category", "amt", "is_fraud")

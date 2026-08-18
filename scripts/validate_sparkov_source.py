@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the quarantined Sparkov source and emit aggregate-only evidence."""
+"""Validate the quarantined Sparkov source and emit source-profile evidence."""
 
 from __future__ import annotations
 
@@ -8,9 +8,8 @@ import csv
 import hashlib
 import json
 from collections import Counter
-from datetime import datetime
+from datetime import UTC, datetime
 from pathlib import Path
-
 
 RAW_FILES = ("fraudTrain.csv", "fraudTest.csv")
 ALLOWLIST = ("trans_date_trans_time", "merchant", "category", "amt", "is_fraud")
@@ -74,7 +73,9 @@ def profile(path: Path) -> dict[str, object]:
             if label not in {"0", "1"}:
                 raise ValueError(f"{path.name}: unexpected label {label!r}")
             labels[label] += 1
-            timestamp = datetime.strptime(row["trans_date_trans_time"], "%Y-%m-%d %H:%M:%S")
+            timestamp = datetime.strptime(
+                row["trans_date_trans_time"], "%Y-%m-%d %H:%M:%S"
+            ).replace(tzinfo=UTC)
             start = timestamp if start is None or timestamp < start else start
             end = timestamp if end is None or timestamp > end else end
             amount = float(row["amt"])

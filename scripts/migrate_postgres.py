@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 """Apply immutable local PostgreSQL migrations."""
 from __future__ import annotations
+
 import argparse
 import os
 from pathlib import Path
+
 import psycopg
+
 
 def main() -> None:
     parser = argparse.ArgumentParser()

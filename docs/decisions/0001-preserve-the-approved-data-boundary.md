@@ -1,5 +1,7 @@
 # 0001 Preserve the approved data boundary
 
+Status: superseded by [0006 Publish all allowlisted event rows](0006-publish-all-allowlisted-event-rows.md) on 2026-08-18.
+
 ## Decision
 
 Process the full approved simulated source locally. Publish only two source-level monitoring aggregates and a fixed evaluation artifact.

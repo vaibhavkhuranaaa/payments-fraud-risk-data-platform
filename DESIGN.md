@@ -76,7 +76,7 @@ Headings are compact labels for analytical regions, never billboard copy. All me
 
 ## Layout
 
-The desktop application uses a persistent 216px evidence index beside a fluid analytical workspace. The workspace follows a twelve-column grid, but sections are separated by full-width rules instead of cards. The first viewport contains the release disposition, key measured values, and the synthetic queue blotter. Evaluation evidence follows without a marketing interlude.
+The desktop application uses a persistent 216px evidence index beside a fluid analytical workspace. The workspace follows a twelve-column grid, but sections are separated by full-width rules instead of cards. The first viewport contains the release disposition, key measured values, the allowlisted event register, and capacity planning. Evaluation evidence follows without a marketing interlude.
 
 At narrow widths the index becomes a horizontal register strip and every table row gains explicit mobile labels. No horizontal scroll is required at 390px.
 
@@ -104,4 +104,4 @@ Charts sit on the same baseline grid as surrounding tables. Axes, units, sample 
 - **Do** retain accessible loading, empty, error, and unmeasured states.
 - **Don't** use KPI cards, large hero slogans, pills, gradients, shadows, or glass.
 - **Don't** use monospace as atmosphere; reserve it for data and references.
-- **Don't** imply scoring, payment decisions, or event-level access.
+- **Don't** imply scoring, payment decisions, or access beyond the seven allowlisted event fields.

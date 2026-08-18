@@ -26,7 +26,6 @@ jobs:
           --health-retries 10
     env:
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/risk_demo
-      API_KEY: test-api-key
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -34,6 +33,7 @@ jobs:
           python-version: '3.12'
       - uses: astral-sh/setup-uv@v7
       - run: uv sync --frozen --group dev
+      - run: uv run --group dev ruff check .
       - run: python3 -m compileall -q src scripts
       - run: uv run python scripts/migrate_postgres.py
       - run: uv run --group dev python -m unittest discover -s tests -v

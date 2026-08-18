@@ -20,7 +20,7 @@
     "name": "Sparkov simulated credit-card transactions",
     "license": "CC0 1.0",
     "rows": 1852394,
-    "dataBoundary": "Raw and event-level source data remains local. Public hosting contains two source-level aggregates and fixed evaluation evidence only."
+    "dataBoundary": "All 1,852,394 simulated events are public through an allowlisted seven-column view. Raw files, identity-like source fields, features, scores, and payment actions remain excluded."
   },
   "metrics": {
     "baselinePrAuc": 0.15994693158012935,
@@ -33,6 +33,8 @@
   },
   "evidence": [
     "docs/images/dashboard-overview.png",
+    "docs/images/dashboard-event-query.png",
+    "docs/images/dashboard-mobile.png",
     "data/validated/evaluation.json",
     "data/validated/pipeline-validation.json",
     "docs/architecture.md",

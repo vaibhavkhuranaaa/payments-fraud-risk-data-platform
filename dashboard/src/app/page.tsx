@@ -1,15 +1,18 @@
 /*
-THESIS: A validation register, not a portfolio dashboard; the queue and decision evidence lead.
+THESIS: A public validation register, not a portfolio dashboard; row-level query and decision evidence lead.
 OWN-WORLD: Cool institutional paper, carbon rules, cobalt selection, amber exceptions, square controls.
-STORY: Verify the release decision, test capacity, inspect the synthetic queue, then audit evidence and boundary.
-FIRST VIEWPORT: A 216px register index frames a compact disposition strip and full-width operations blotter.
-FORM: Queue-blotter-first, ranked second and selected for analyst scan speed; seed f162bd09.
+STORY: Query the complete simulated event set, verify the release decision, test capacity, then audit evidence.
+FIRST VIEWPORT: A 216px register index frames the disposition strip and a bounded public event worksheet.
+FORM: Validation-register extension inside the established queue-blotter composition; seed f162bd09.
 */
 import styles from "./page.module.css";
-import { CapacityScenario, Simulation } from "./simulation";
+import { CapacityScenario } from "./capacity";
+import { EventExplorer, type EventQuery } from "./event-explorer";
 import {
+  getEvents,
   getEvaluation,
   getMonitoring,
+  type EventPage,
   type Evaluation,
   type Monitoring,
 } from "@/lib/monitoring";
@@ -39,31 +42,31 @@ function Lineage() {
         <p className={styles.kicker}>CONTROL 04 / DATA BOUNDARY</p>
         <h2 id="lineage-title">Local processing and public evidence are separate zones</h2>
         <p>
-          The complete simulated source is processed locally. Public hosting is limited to
-          source-level aggregates and fixed evaluation evidence.
+          The complete simulated source is published through allowlisted analytical fields.
+          Identity-like raw columns and decisioning capabilities remain outside the public view.
         </p>
       </div>
       <ol className={styles.flow}>
         <li>
-          <strong>1. Local source</strong>
-          <span>1,852,394 simulated events. Raw fields never leave local processing.</span>
+          <strong>1. Simulated source</strong>
+          <span>1,852,394 events validated against the approved source contract.</span>
         </li>
         <li>
           <strong>2. Governed pipeline</strong>
           <span>Validation, point-in-time features, and chronological evaluation run locally.</span>
         </li>
         <li>
-          <strong>3. Approved publication</strong>
-          <span>Two aggregate monitoring rows and precomputed evaluation evidence only.</span>
+          <strong>3. Public event view</strong>
+          <span>Every event row through seven allowlisted analytical fields.</span>
         </li>
         <li>
-          <strong>4. Public dashboard</strong>
-          <span>Aggregate evidence plus deterministic browser-generated signals.</span>
+          <strong>4. Public register</strong>
+          <span>Bounded queries, monitoring, and precomputed evaluation evidence.</span>
         </li>
       </ol>
       <p className={styles.refusal}>
-        <strong>Not available here:</strong> raw source, event-level records, identifiers, personal
-        data, scores, scoring endpoints, payment decisions, or payment-processing behavior.
+        <strong>Not available here:</strong> identity-like raw columns, personal identifiers,
+        model scores, scoring endpoints, payment decisions, or payment-processing behavior.
       </p>
     </section>
   );
@@ -227,7 +230,17 @@ function EvaluationSection({ evaluation }: { evaluation: Evaluation }) {
   );
 }
 
-function Dashboard({ monitoring, evaluation }: { monitoring: Monitoring; evaluation: Evaluation }) {
+function Dashboard({
+  monitoring,
+  evaluation,
+  events,
+  query,
+}: {
+  monitoring: Monitoring;
+  evaluation: Evaluation;
+  events: EventPage | null;
+  query: EventQuery;
+}) {
   const totals = monitoring.sources.reduce(
     (sum, source) => ({
       events: sum.events + source.event_count,
@@ -256,7 +269,7 @@ function Dashboard({ monitoring, evaluation }: { monitoring: Monitoring; evaluat
         <a href="#top" className={styles.wordmark}>Payments risk validation register</a>
         <span className={styles.headerRef}>REGISTER / FR-2026-08</span>
         <span className={styles.status}>
-          PUBLIC SCOPE: AGGREGATE ONLY
+          PUBLIC SCOPE: 1,852,394 EVENT ROWS
         </span>
       </header>
       <div className={styles.appBody}>
@@ -267,21 +280,19 @@ function Dashboard({ monitoring, evaluation }: { monitoring: Monitoring; evaluat
           </div>
           <nav aria-label="Register sections">
             <a href="#top"><b>00</b> Disposition</a>
-            <a href="#queue"><b>01</b> Review queue</a>
+            <a href="#queue"><b>01</b> Event query</a>
             <a href="#capacity"><b>02</b> Capacity</a>
             <a href="#evaluation"><b>03</b> Model evidence</a>
             <a href="#boundary"><b>04</b> Data boundary</a>
             <a href="#evidence"><b>05</b> Publication ledger</a>
           </nav>
           <dl className={styles.registerFacts}>
-            <div><dt>Source class</dt><dd>Simulated</dd></div>
+            <div><dt>Public rows</dt><dd>{integer.format(totals.events)}</dd></div>
             <div><dt>Evaluation</dt><dd>Chronological</dd></div>
             <div><dt>Queue policy</dt><dd>Fixed at 1%</dd></div>
             <div><dt>Action scope</dt><dd>Analyst review</dd></div>
           </dl>
-          <p className={styles.registerLimit}>
-            No raw records, identifiers, scores, approvals, or declines.
-          </p>
+          <p className={styles.registerLimit}>No identity-like fields, scores, approvals, or declines.</p>
         </aside>
 
         <div className={styles.workspace}>
@@ -290,13 +301,13 @@ function Dashboard({ monitoring, evaluation }: { monitoring: Monitoring; evaluat
               <p className={styles.kicker}>MODEL VALIDATION / ANALYST TRIAGE DEMONSTRATION</p>
               <h1 id="page-title">Fraud risk control review</h1>
               <p>
-                Fixed holdout evidence, constrained review capacity, and aggregate-only publication.
+                Full row-level event queries, fixed holdout evidence, and constrained review capacity.
               </p>
             </div>
             <dl>
               <div><dt>Coverage</dt><dd>{date(firstEvent)} to {date(lastEvent)}</dd></div>
               <div><dt>Holdout</dt><dd>{integer.format(holdout?.event_count ?? 0)} events</dd></div>
-              <div><dt>Review date</dt><dd>17 Aug 2026</dd></div>
+              <div><dt>Review date</dt><dd>18 Aug 2026</dd></div>
             </dl>
           </section>
 
@@ -315,7 +326,7 @@ function Dashboard({ monitoring, evaluation }: { monitoring: Monitoring; evaluat
           </section>
 
           <div className={styles.operations}>
-            <Simulation />
+            <EventExplorer page={events} query={query} />
             <CapacityScenario
               measuredRate={evaluation.review_rate}
               measuredVolume={baseline.alert_volume}
@@ -326,10 +337,10 @@ function Dashboard({ monitoring, evaluation }: { monitoring: Monitoring; evaluat
           <Lineage />
           <section className={styles.ledger} id="evidence">
             <div className={styles.sectionLead}>
-              <p className={styles.kicker}>EVIDENCE 05 / PUBLICATION LEDGER</p>
-              <h2>Approved aggregate source partitions</h2>
+              <p className={styles.kicker}>EVIDENCE 05 / COVERAGE LEDGER</p>
+              <h2>Complete event publication by source partition</h2>
               <p>
-                These two rows prove coverage and lineage. They do not expose the local event source.
+                These source totals reconcile the public event view to all 1,852,394 ingested rows.
               </p>
             </div>
             <div className={styles.table} role="table" aria-label="Approved aggregate source partitions">
@@ -355,8 +366,8 @@ function Dashboard({ monitoring, evaluation }: { monitoring: Monitoring; evaluat
             </div>
           </section>
           <footer className={styles.footer}>
-            <span>PUBLIC: aggregate monitoring + fixed evaluation evidence</span>
-            <span>LOCAL: raw simulated source + full pipeline</span>
+            <span>PUBLIC: allowlisted event rows + monitoring + evaluation evidence</span>
+            <span>EXCLUDED: identity-like fields + model scores + payment actions</span>
           </footer>
         </div>
       </div>
@@ -364,13 +375,14 @@ function Dashboard({ monitoring, evaluation }: { monitoring: Monitoring; evaluat
   );
 }
 
-async function getDashboardData(): Promise<
-  | { status: "ready"; monitoring: Monitoring; evaluation: Evaluation }
+async function getDashboardData(query: EventQuery): Promise<
+  | { status: "ready"; monitoring: Monitoring; evaluation: Evaluation; events: EventPage | null }
   | { status: "unavailable" }
 > {
   try {
     const [monitoring, evaluation] = await Promise.all([getMonitoring(), getEvaluation()]);
-    return { status: "ready", monitoring, evaluation };
+    const events = await getEvents({ ...query }).catch(() => null);
+    return { status: "ready", monitoring, evaluation, events };
   } catch {
     return { status: "unavailable" };
   }
@@ -379,30 +391,31 @@ async function getDashboardData(): Promise<
 function EmptyDashboard() {
   return (
     <main className={styles.fallback}>
-      <p className={styles.kicker}>No approved aggregates</p>
-      <h1>There is no published monitoring evidence to display.</h1>
+      <p className={styles.kicker}>No published coverage</p>
+      <h1>There is no public event evidence to display.</h1>
       <p>
-        This empty state does not reveal local source records. A publication owner must verify an
-        approved aggregate refresh before the dashboard can show coverage.
+        A publication owner must verify the event view and source reconciliation before the
+        register can show coverage.
       </p>
     </main>
   );
 }
 
-export default async function Home() {
-  const data = await getDashboardData();
+export default async function Home({ searchParams }: { searchParams: Promise<EventQuery> }) {
+  const query = await searchParams;
+  const data = await getDashboardData(query);
   if (data.status === "unavailable") {
     return (
       <main className={styles.fallback} role="alert">
         <p className={styles.kicker}>Service unavailable</p>
-        <h1>Aggregate evidence is temporarily unavailable.</h1>
+        <h1>Public event evidence is temporarily unavailable.</h1>
         <p>
-          The dashboard does not fall back to local or raw transactions. Try again after the
-          protected aggregate service recovers.
+          The register does not fall back to source files. Try again after the read-only event
+          service recovers.
         </p>
       </main>
     );
   }
   if (data.monitoring.sources.length === 0) return <EmptyDashboard />;
-  return <Dashboard monitoring={data.monitoring} evaluation={data.evaluation} />;
+  return <Dashboard monitoring={data.monitoring} evaluation={data.evaluation} events={data.events} query={query} />;
 }

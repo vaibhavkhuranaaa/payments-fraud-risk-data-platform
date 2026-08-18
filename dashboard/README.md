@@ -1,12 +1,12 @@
 # Dashboard
 
-Server-rendered Next.js validation register for the aggregate-only analyst-triage demonstration.
+Server-rendered Next.js validation register for the public simulated-event and analyst-triage demonstration.
 
 ## Runtime contract
 
-- `API_BASE_URL` points to the protected FastAPI service.
-- `RISK_API_KEY` is server-side only and must never use a `NEXT_PUBLIC_` prefix.
-- The browser receives rendered aggregates and deterministic synthetic signals only.
+- `API_BASE_URL` points to the public read-only FastAPI service.
+- The browser receives only allowlisted event fields, aggregate monitoring, and fixed evaluation evidence.
+- Event queries use cursor pagination and return at most 100 rows per request.
 
 ## Local commands
 
@@ -14,7 +14,7 @@ Server-rendered Next.js validation register for the aggregate-only analyst-triag
 npm ci
 npm run lint
 npm run build
-API_BASE_URL=http://127.0.0.1:8000 RISK_API_KEY=local-demo-key npm run dev
+API_BASE_URL=http://127.0.0.1:8000 npm run dev
 ```
 
-The dashboard includes explicit loading, empty, unavailable, and refusal states. It has no event-level route, scoring endpoint, or payment action.
+The dashboard includes explicit loading, empty, unavailable, and refusal states. It has no scoring endpoint or payment action.

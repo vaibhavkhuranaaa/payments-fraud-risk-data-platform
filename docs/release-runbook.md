@@ -2,38 +2,38 @@
 
 ## What is ready locally
 
-- FastAPI image definition: `Dockerfile` with a frozen `uv.lock` runtime dependency contract.
-- Dashboard production build: `dashboard/` with `npm ci`, lint, and build commands.
-- Versioned PostgreSQL migrations: governed schema and aggregate-reader role.
-- CI definition: `.github/workflows/quality.yml` for records, API compilation/tests, and dashboard checks.
-- Runtime contract: `DATABASE_URL` stays in the API host secret store; `EVALUATION_PATH` is a local container path; `API_BASE_URL` is dashboard configuration.
+- FastAPI image definition with a frozen runtime dependency contract.
+- Dashboard production build with lint and build gates.
+- Versioned PostgreSQL migrations for the governed schema, least-privilege reader, public event view, and supporting indexes.
+- CI for migrations, API tests, dashboard lint, and production build.
+- Runtime contract: `DATABASE_URL` remains in the API host secret store; `EVALUATION_PATH` is a runtime path; `API_BASE_URL` is dashboard configuration.
 
-## Preconditions for D5 approval
+## Preconditions for full-row publication
 
-Record all of the following in `.project/approvals.yml` before creating anything externally:
+Record all of the following in the private delivery state before any external action:
 
-1. Repository owner, visibility, default-branch protections, and secret-management owner.
-2. Provider accounts, approved region, a monthly cost cap, and the billing owner.
-3. Supabase database project, non-superuser API credential with the `risk_api` role, and confirmation that no raw source or prohibited fields are uploaded.
-4. Render service exposure (private API or authenticated public API) and its rollback revision.
-5. Vercel project exposure and the public wording that it is an analyst-triage demonstration, not a decision system.
-6. Teardown owner and a date or condition for closing all provider resources.
+1. Repository owner, intended commit, visibility, branch protections, and secret owner.
+2. Database provider and tier with enough storage above the measured 2,266 MB footprint, plus operational headroom.
+3. Region, monthly cost cap, billing owner, retention, backups, and teardown condition.
+4. Confirmation that only the seven allowlisted event fields will be loaded.
+5. Public API exposure, throttling, connection pooling, timeouts, monitoring, and rollback revision.
+6. Dashboard exposure and disclosure that the data is simulated and the product is not a payment decision system.
 
 ## Controlled release sequence
 
-1. Create the approved repository and protect the default branch.
+1. Approve the exact repository revision and provider plan.
 2. Configure CI, runtime secrets, and provider audit access.
 3. Provision PostgreSQL in the approved region, apply migrations in order, and create a LOGIN credential that inherits `risk_api` only.
-4. Verify the role cannot read `risk.events`; it may read only `risk.public_monitoring_summary`.
-5. Load only approved, hosted-safe records; verify lineage, aggregate counts, and no prohibited columns before API deployment.
-6. Build and deploy the FastAPI image. Verify `/health`, `/v1/monitoring`, and `/v1/evaluation` with authenticated operational access.
-7. Deploy the dashboard with the approved API base URL. Verify loading, unavailable-service, and aggregate-only display states.
-8. Record service revisions, migration versions, test results, cost controls, and the rollback target in project evidence.
+4. Load only allowlisted governed records. Verify 1,852,394 rows, lineage totals, prohibited-column absence, and indexed cursor plans.
+5. Verify the API role can read `risk.public_events` and `risk.public_demo_monitoring`, cannot read `risk.events`, and cannot write.
+6. Build and deploy the FastAPI image. Verify health, pagination, filters, detail lookup, bounded errors, rate controls, and aggregate endpoints.
+7. Deploy the dashboard with the approved API base URL. Verify loading, empty, unavailable, desktop, mobile, and no-horizontal-overflow states.
+8. Record service revisions, migration versions, checks, cost controls, deployed-source verification, and rollback targets.
 
 ## Rollback and teardown
 
-- Dashboard/API: revert to the last verified revision or disable public traffic; do not attempt data repair through the public service.
-- Database: stop application traffic before a restore. Use a provider snapshot only under the approved retention policy.
-- Retirement: remove dashboard, API, database, service credentials, and provider logs according to the approved retention plan. Delete the local raw source separately, because it is never hosted.
+- Dashboard and API: revert to the last verified revision or disable public traffic.
+- Database: stop application traffic before restore or teardown. Do not repair data through the public service.
+- Retirement: remove dashboard, API, database, credentials, and provider logs under the approved retention plan. Delete the local raw source separately because it is never hosted.
 
-This file does not authorize provider changes beyond the completed D5 release. Any future provider action remains a human decision gate.
+This runbook does not authorize a push, provider change, paid resource, upload, or deployment.

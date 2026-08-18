@@ -2,11 +2,11 @@
 
 [![Quality](https://github.com/vaibhavkhuranaaa/payments-fraud-risk-data-platform/actions/workflows/quality.yml/badge.svg)](https://github.com/vaibhavkhuranaaa/payments-fraud-risk-data-platform/actions/workflows/quality.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-1857c9.svg)](LICENSE)
-[![Live demo](https://img.shields.io/badge/demo-aggregate--only-b94c31.svg)](https://payments-fraud-risk-dashboard.vercel.app)
+[![Live demo](https://img.shields.io/badge/demo-legacy%20aggregate-b94c31.svg)](https://payments-fraud-risk-dashboard.vercel.app)
 
 Status: locally verified release candidate. The live demo remains the earlier approved release until this revision receives deployment approval.
 
-![Fraud-risk validation register showing the release disposition, synthetic review queue, and capacity constraint](docs/images/dashboard-overview.png)
+![Fraud-risk validation register showing release evidence, public event queries, and capacity constraints](docs/images/dashboard-overview.png)
 
 ## What it does
 
@@ -17,8 +17,8 @@ This project turns 1,852,394 simulated payment events into a governed analyst-tr
 - builds merchant and category history from prior rows only;
 - compares ordinary and class-weighted logistic policies on a chronological holdout;
 - sizes a fixed-capacity review queue and makes calibration weakness visible;
-- publishes two source-level monitoring aggregates and fixed evaluation evidence;
-- provides safe browser-only queue interaction without scoring or payment actions.
+- publishes all 1,852,394 allowlisted event rows through bounded read-only queries;
+- keeps aggregate monitoring and fixed evaluation evidence alongside the event register.
 
 Decision: retain the ordinary logistic baseline for the measured 1% review queue. The class-weighted challenger does not improve ranking, recall, or probability error.
 
@@ -27,11 +27,11 @@ Decision: retain the ordinary logistic baseline for the measured 1% review queue
 ```text
 Local approved source -> PostgreSQL validation and prior-row features
                       -> chronological model evaluation
-                      -> aggregate-only publication -> protected FastAPI
-                                                     -> Next.js validation register
+                      -> allowlisted event view -> read-only FastAPI
+                                                -> Next.js validation register
 ```
 
-Raw files, prohibited source fields, event-level records, and scores remain outside the public system. The API role can read only the aggregate publication table. See [the full architecture](docs/architecture.md) and [scope](docs/scope.md).
+Raw files, identity-like source fields, features, model scores, and payment actions remain outside the public system. The API role can read the seven-column event view plus aggregate monitoring. Cursor pagination and a 100-row request cap prevent unbounded responses. See [the full architecture](docs/architecture.md) and [scope](docs/scope.md).
 
 ## Evaluation
 
@@ -53,12 +53,13 @@ The converged local evaluation completed in 24.73 seconds on one machine. This i
 - The challenger is the same logistic model family with class weighting, not a materially different model.
 - Calibration is uneven. Scores are not reliable probabilities without more work.
 - No fairness analysis, threshold sweep, delayed-label feedback loop, or production drift study is claimed.
-- No raw data, event-level browsing, live scoring, payment approval, payment decline, or automated decision exists.
+- Public event records are simulated and limited to event ID, timestamp, merchant, category, amount, fraud label, and source partition.
+- No raw source files, identity-like fields, features, model scores, live scoring, payment approval, payment decline, or automated decision exists.
 - Free-tier services may cold-start or pause.
 
 ## Scaling
 
-The demonstrated full-data workflow is local PostgreSQL batch processing. The public demo serves only two aggregates, which keeps exposure and monthly cost at zero. A scaled design would add scheduled container jobs, partitioned analytical storage, run-level observability, freshness alerts, and managed identity. That design is documented but not provisioned. Any provider, exposure, or cost change requires separate approval.
+The full-row release candidate runs locally on PostgreSQL and exposes indexed, cursor-paginated reads. The existing public deployment is still the earlier aggregate release. The measured database footprint is 2,266 MB, so its 500 MB tier cannot hold this revision. Publishing requires an approved hosting and cost decision. No new provider or paid resource has been provisioned.
 
 ## Run locally
 
@@ -72,19 +73,19 @@ DATABASE_URL=postgresql://postgres:postgres@localhost:54329/risk_demo uv run pyt
 DATABASE_URL=postgresql://postgres:postgres@localhost:54329/risk_demo uv run python src/postgres_ingest.py
 DATABASE_URL=postgresql://postgres:postgres@localhost:54329/risk_demo uv run python scripts/evaluate_models.py
 DATABASE_URL=postgresql://postgres:postgres@localhost:54329/risk_demo uv run python scripts/publish_aggregate_demo.py
-DATABASE_URL=postgresql://postgres:postgres@localhost:54329/risk_demo API_KEY=local-demo-key FULL_DATA_VALIDATION=1 uv run python -m unittest discover -s tests -v
+DATABASE_URL=postgresql://postgres:postgres@localhost:54329/risk_demo FULL_DATA_VALIDATION=1 uv run python -m unittest discover -s tests -v
 ```
 
-Start the protected local API and dashboard:
+Start the read-only local API and dashboard:
 
 ```sh
-DATABASE_URL=postgresql://postgres:postgres@localhost:54329/risk_demo API_KEY=local-demo-key uv run uvicorn src.api:app --host 127.0.0.1 --port 8000
+DATABASE_URL=postgresql://postgres:postgres@localhost:54329/risk_demo uv run uvicorn src.api:app --host 127.0.0.1 --port 8000
 cd dashboard
 npm ci
-API_BASE_URL=http://127.0.0.1:8000 RISK_API_KEY=local-demo-key npm run dev
+API_BASE_URL=http://127.0.0.1:8000 npm run dev
 ```
 
-CI uses a real PostgreSQL service with tiny synthetic aggregates. Full-volume tests remain an explicit local gate because the approved raw source is never committed.
+CI uses a real PostgreSQL service with tiny simulated event fixtures. Full-volume count and query-plan checks remain an explicit local gate because the approved source is never committed.
 
 ## License
 

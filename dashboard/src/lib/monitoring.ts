@@ -34,15 +34,29 @@ export type Evaluation = {
   models: Record<string, EvaluationModel>;
 };
 
+export type PublicEvent = {
+  event_id: string;
+  event_ts: string;
+  merchant: string;
+  category: string;
+  amount: number;
+  is_fraud: boolean;
+  source_file: string;
+};
+
+export type EventPage = {
+  scope: string;
+  dataset_rows: number;
+  returned_rows: number;
+  has_more: boolean;
+  next_cursor: string | null;
+  events: PublicEvent[];
+};
+
 const apiBaseUrl = process.env.API_BASE_URL ?? "http://127.0.0.1:8000";
-const apiKey = process.env.RISK_API_KEY;
 
 async function apiFetch<T>(path: string): Promise<T> {
-  if (!apiKey) {
-    throw new Error("RISK_API_KEY is required for aggregate API access");
-  }
   const response = await fetch(`${apiBaseUrl}${path}`, {
-    headers: { "X-API-Key": apiKey },
     next: { revalidate: 60 },
   });
   if (!response.ok) {
@@ -57,4 +71,12 @@ export function getMonitoring() {
 
 export function getEvaluation() {
   return apiFetch<Evaluation>("/v1/evaluation");
+}
+
+export function getEvents(parameters: Record<string, string | undefined>) {
+  const query = new URLSearchParams();
+  for (const [key, value] of Object.entries(parameters)) {
+    if (value) query.set(key, value);
+  }
+  return apiFetch<EventPage>(`/v1/events?${query}`);
 }

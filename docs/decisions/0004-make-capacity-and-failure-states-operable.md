@@ -1,5 +1,7 @@
 # 0004 Make capacity and failure states operable
 
+Status: synthetic queue and protected-access portions superseded by [0006 Publish all allowlisted event rows](0006-publish-all-allowlisted-event-rows.md) on 2026-08-18. Capacity and failure-state decisions remain active.
+
 ## Decision
 
 Keep the dashboard server-rendered for protected aggregate access. Add browser-only capacity planning and synthetic queue review controls, plus explicit loading, empty, unavailable, and refusal states.

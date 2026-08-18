@@ -8,23 +8,23 @@ web
 
 ## Users
 
-Payments-risk analysts and hiring managers assessing a governed analyst-triage workflow. They need to understand what evidence exists, how a constrained review queue behaves, and where the product intentionally stops.
+Payments-risk analysts and hiring managers assessing a governed analyst-triage workflow. They need to query the complete simulated analytical event set, understand how a constrained review queue behaves, and see where the product intentionally stops.
 
 ## Product Purpose
 
-This portfolio demonstration shows an end-to-end, reproducible fraud-risk data workflow over a locally processed simulated source. Success is an informed review of aggregate monitoring and model evidence, never an automated payment outcome.
+This portfolio demonstration shows an end-to-end, reproducible fraud-risk data workflow over a simulated source. Success is an informed review of row-level analytical events, monitoring, and model evidence, never an automated payment outcome.
 
 ## Positioning
 
-The public experience makes the data boundary visible: live interaction is generated deterministic synthetic activity while the deployed system serves only aggregate monitoring and precomputed evaluation evidence.
+The public experience makes the data boundary visible: all 1,852,394 simulated event rows are queryable through allowlisted analytical fields, while identity-like source columns remain excluded.
 
 ## Operating Context
 
-An analyst assesses a fixed-capacity review queue, model calibration, and monthly alert distribution. The full 1,852,394-event simulated source is local-only; the hosted publication has two aggregate source partitions.
+An analyst queries the 1,852,394-event simulated analytical source, assesses a fixed-capacity review queue, and reviews model calibration and monthly alert distribution. The release candidate exposes row-level analytical fields plus fixed evaluation evidence.
 
 ## Capabilities and Constraints
 
-The dashboard may show aggregate evidence and generated synthetic examples. It must not expose raw transactions, event-level records, direct identifiers, personal data, model scores, scoring endpoints, payment decisions, or payment-processing behavior. The challenger is a class-weighted logistic-regression configuration, not a materially different model. The cost cap is $0/month.
+The dashboard may query every simulated event through event ID, timestamp, merchant, category, amount, fraud label, and source partition. It must not expose identity-like raw fields, direct personal identifiers, model scores, scoring endpoints, payment decisions, or payment-processing behavior. Queries are read-only, cursor-paginated, and capped per request. The challenger is a class-weighted logistic-regression configuration, not a materially different model. The cost cap is $0/month.
 
 ## Brand Commitments
 
@@ -32,11 +32,11 @@ Use direct, evidence-led language. Do not invent a product brand, customers, or 
 
 ## Evidence on Hand
 
-`data/validated/evaluation.json` contains chronological split metrics, calibration bins, and monthly alert volumes. `scripts/evaluate_models.py` documents the reproducible method. Aggregate monitoring is served through the protected API.
+`data/validated/evaluation.json` contains chronological split metrics, calibration bins, and monthly alert volumes. `scripts/evaluate_models.py` documents the reproducible method. PostgreSQL contains all allowlisted event rows and serves them through a bounded read-only public API.
 
 ## Product Principles
 
-- Make the data boundary as legible as the model evidence.
+- Make the row-level data boundary as legible as the model evidence.
 - Explain evidence in the context of the analyst decision it supports.
 - Label generated demonstration data honestly.
 - Prefer constrained, reviewable interaction over simulated decisioning.

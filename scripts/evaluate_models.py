@@ -17,7 +17,6 @@ from sklearn.metrics import average_precision_score, brier_score_loss
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
-
 FEATURE_COLUMNS = (
     "amount",
     "merchant",
