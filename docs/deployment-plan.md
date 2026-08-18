@@ -24,33 +24,33 @@ The release candidate is an analytical demonstration over simulated events. It n
 - **API contract:** unauthenticated read-only access is deliberate. Event queries use exact filters, an opaque cursor, deterministic ordering, and a 100-row maximum. The database role cannot read the governed base table.
 - **Dashboard contract:** server-rendered analytical controls, explicit loading, empty, and unavailable states, and no payment action.
 
-## Legacy deployment, unchanged
+## Existing deployment target
 
-The existing public release predates decision 0006:
+The existing free services predate decision 0006 and are the approved publication target:
 
-- Supabase Free project `elhhydpltongfdziroio` in Ohio contains two aggregate rows.
+- Supabase Free project `elhhydpltongfdziroio` in Ohio receives the compact public store.
 - Render Free API `https://payments-risk-api.onrender.com` serves the protected aggregate contract.
 - Vercel Hobby dashboard `https://payments-fraud-risk-dashboard.vercel.app` renders that aggregate contract.
-- The verified 2026-08-04 release remains unchanged. This repository revision has not been pushed or deployed.
+- The prior aggregate revision remains the rollback target until the full-row release passes deployed verification.
 
-The legacy deployment is not evidence that the new full-row architecture is publicly available.
+Only an exact remote row count, endpoint checks, and deployed-source verification count as evidence that the full-row architecture is public.
 
-## Required deployment decision
+## Approved $0 deployment decision
 
-The current local PostgreSQL database is 2,266 MB, including the event table and indexes. The existing Supabase Free database limit is 500 MB, so the approved $0 profile cannot hold this release. Publishing requires a new written decision covering:
+The governed local PostgreSQL database is 2,266 MB. The normalized public store removes development-only repetition and retains all 1,852,394 approved records in about 266 MB including indexes. The approved release uses the existing free services and keeps the monthly cost cap at $0:
 
-1. A database provider and tier sized for the full allowlisted dataset, indexes, and operational headroom.
-2. A monthly cost cap, billing owner, region, retention period, backup policy, and teardown owner.
+1. Supabase Free in the existing region, with a 500 MB database limit and measured headroom.
+2. A $0 monthly cost cap. Any upgrade or paid add-on requires a new approval.
 3. Public-query abuse controls such as request throttling, connection pooling, query timeouts, and monitoring.
 4. A bulk-load method that never uploads raw files or prohibited fields.
 5. API and dashboard revisions, rollback targets, and deployed-source verification.
 
-No provider change, paid resource, data upload, push, or deployment is authorized by this plan.
+No provider change or paid resource is part of this release.
 
 ## Local release checklist
 
 1. Build the FastAPI image and verify it contains code and fixed evaluation evidence, not raw source data or a database dump.
-2. Apply migrations `001` through `005`. Create a LOGIN credential outside the repository that inherits `risk_api` only.
+2. Apply migrations `001` through `006`. Create a LOGIN credential outside the repository that inherits `risk_api` only.
 3. Verify `risk_api` can select from `risk.public_events` and `risk.public_demo_monitoring`, cannot select from `risk.events`, and has no write privilege on either public view.
 4. Verify all 1,852,394 rows are reachable, default pagination uses the event-time index, filters are parameterized, and malformed cursors or inverted ranges fail safely.
 5. Verify `/health`, `/v1/events`, `/v1/events/{event_id}`, `/v1/monitoring`, and `/v1/evaluation` plus dashboard loading, empty, unavailable, mobile, and desktop states.

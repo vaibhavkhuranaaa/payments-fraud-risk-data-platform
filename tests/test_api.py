@@ -54,6 +54,30 @@ class ApiTests(unittest.TestCase):
                     ],
                 )
             if not connection.execute(
+                "SELECT count(*) FROM risk.public_event_store"
+            ).fetchone()[0]:
+                connection.executemany(
+                    "INSERT INTO risk.public_merchants (merchant_id, merchant) VALUES (%s, %s)",
+                    [(1, "fraud_Test One"), (2, "fraud_Test Two"), (3, "fraud_Test Three")],
+                )
+                connection.executemany(
+                    "INSERT INTO risk.public_categories (category_id, category) VALUES (%s, %s)",
+                    [(1, "other"), (2, "test")],
+                )
+                connection.executemany(
+                    """
+                    INSERT INTO risk.public_event_store
+                      (event_id, event_ts, merchant_id, category_id, amount_cents,
+                       is_fraud, source_partition)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s)
+                    """,
+                    [
+                        (1, "2020-01-01T12:00:00Z", 1, 2, 1000, False, False),
+                        (2, "2020-01-02T12:00:00Z", 2, 2, 2000, True, False),
+                        (3, "2020-01-03T12:00:00Z", 3, 1, 3000, False, True),
+                    ],
+                )
+            if not connection.execute(
                 "SELECT count(*) FROM risk.public_demo_monitoring"
             ).fetchone()[0]:
                 connection.executemany(
@@ -140,6 +164,12 @@ class ApiTests(unittest.TestCase):
             )
             self.assertEqual(
                 client.get("/v1/events", params={"limit": 101}).status_code, 422
+            )
+            self.assertEqual(
+                client.get(
+                    "/v1/events", params={"source_file": "unapproved.csv"}
+                ).status_code,
+                422,
             )
 
 

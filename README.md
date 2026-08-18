@@ -59,7 +59,7 @@ The converged local evaluation completed in 24.73 seconds on one machine. This i
 
 ## Scaling
 
-The full-row release candidate runs locally on PostgreSQL and exposes indexed, cursor-paginated reads. The existing public deployment is still the earlier aggregate release. The measured database footprint is 2,266 MB, so its 500 MB tier cannot hold this revision. Publishing requires an approved hosting and cost decision. No new provider or paid resource has been provisioned.
+The full-row release candidate uses a normalized PostgreSQL publication store with indexed, cursor-paginated reads. All 1,852,394 allowlisted events, dictionaries, and indexes occupy about 266 MB locally. The wider governed development database remains local. This compact boundary fits the existing 500 MB free database tier while preserving about 224 MB of measured headroom. Free-tier capacity and availability remain demonstration constraints, not production claims.
 
 ## Run locally
 

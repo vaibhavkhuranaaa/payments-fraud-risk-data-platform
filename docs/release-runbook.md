@@ -1,4 +1,4 @@
-# Release runbook: approval required before execution
+# Release runbook
 
 ## What is ready locally
 
@@ -13,7 +13,7 @@
 Record all of the following in the private delivery state before any external action:
 
 1. Repository owner, intended commit, visibility, branch protections, and secret owner.
-2. Database provider and tier with enough storage above the measured 2,266 MB footprint, plus operational headroom.
+2. Supabase Free capacity for the measured 266 MB compact publication store, plus operational headroom.
 3. Region, monthly cost cap, billing owner, retention, backups, and teardown condition.
 4. Confirmation that only the seven allowlisted event fields will be loaded.
 5. Public API exposure, throttling, connection pooling, timeouts, monitoring, and rollback revision.
@@ -36,4 +36,4 @@ Record all of the following in the private delivery state before any external ac
 - Database: stop application traffic before restore or teardown. Do not repair data through the public service.
 - Retirement: remove dashboard, API, database, credentials, and provider logs under the approved retention plan. Delete the local raw source separately because it is never hosted.
 
-This runbook does not authorize a push, provider change, paid resource, upload, or deployment.
+This runbook does not authorize a provider change, paid resource, or cost increase.

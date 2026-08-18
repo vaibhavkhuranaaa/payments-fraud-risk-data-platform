@@ -8,8 +8,9 @@ import json
 import os
 from contextlib import asynccontextmanager
 from datetime import datetime
+from decimal import Decimal
 from pathlib import Path
-from typing import Annotated
+from typing import Annotated, Literal
 
 import psycopg
 from fastapi import FastAPI, HTTPException, Query, status
@@ -37,22 +38,24 @@ EVENT_COLUMNS = (
 MAX_PAGE_SIZE = 100
 
 
-def encode_cursor(event_ts: datetime, event_id: str) -> str:
-    payload = json.dumps([event_ts.isoformat(), event_id], separators=(",", ":"))
-    return base64.urlsafe_b64encode(payload.encode()).decode().rstrip("=")
+def encode_cursor(event_id: int) -> str:
+    return base64.urlsafe_b64encode(str(event_id).encode()).decode().rstrip("=")
 
 
-def decode_cursor(value: str) -> tuple[datetime, str]:
+def decode_cursor(value: str) -> int:
     try:
         padding = "=" * (-len(value) % 4)
-        event_ts, event_id = json.loads(base64.urlsafe_b64decode(value + padding))
-        return datetime.fromisoformat(event_ts), str(event_id)
-    except (binascii.Error, TypeError, ValueError, json.JSONDecodeError) as error:
+        event_id = int(base64.urlsafe_b64decode(value + padding))
+        if event_id < 1:
+            raise ValueError
+        return event_id
+    except (binascii.Error, TypeError, ValueError) as error:
         raise HTTPException(status_code=400, detail="invalid event cursor") from error
 
 
 def event_payload(row: tuple[object, ...]) -> dict[str, object]:
     payload = dict(zip(EVENT_COLUMNS, row))
+    payload["event_id"] = str(payload["event_id"])
     payload["amount"] = float(payload["amount"])
     payload["event_ts"] = payload["event_ts"].isoformat()
     return payload
@@ -66,7 +69,7 @@ async def lifespan(app: FastAPI):
     app.state.database_url = database_url
     with psycopg.connect(database_url) as connection:
         app.state.event_count = connection.execute(
-            "SELECT count(*) FROM risk.public_events"
+            "SELECT count(*) FROM risk.public_event_store"
         ).fetchone()[0]
     yield
 
@@ -116,10 +119,10 @@ def events(
     limit: Annotated[int, Query(ge=1, le=MAX_PAGE_SIZE)] = 25,
     merchant: Annotated[str | None, Query(max_length=200)] = None,
     category: Annotated[str | None, Query(max_length=100)] = None,
-    source_file: Annotated[str | None, Query(max_length=40)] = None,
+    source_file: Literal["fraudTrain.csv", "fraudTest.csv"] | None = None,
     is_fraud: bool | None = None,
-    min_amount: Annotated[float | None, Query(ge=0)] = None,
-    max_amount: Annotated[float | None, Query(ge=0)] = None,
+    min_amount: Annotated[Decimal | None, Query(ge=0)] = None,
+    max_amount: Annotated[Decimal | None, Query(ge=0)] = None,
     from_ts: datetime | None = None,
     to_ts: datetime | None = None,
     cursor: Annotated[str | None, Query(max_length=256)] = None,
@@ -134,30 +137,43 @@ def events(
     clauses = ["TRUE"]
     parameters: list[object] = []
     filters = (
-        (merchant, "merchant = %s"),
-        (category, "category = %s"),
-        (source_file, "source_file = %s"),
-        (is_fraud, "is_fraud = %s"),
-        (min_amount, "amount >= %s"),
-        (max_amount, "amount <= %s"),
-        (from_ts, "event_ts >= %s"),
-        (to_ts, "event_ts <= %s"),
+        (
+            merchant,
+            "events.merchant_id = (SELECT merchant_id FROM risk.public_merchants WHERE merchant = %s)",
+        ),
+        (
+            category,
+            "events.category_id = (SELECT category_id FROM risk.public_categories WHERE category = %s)",
+        ),
+        (
+            source_file == "fraudTest.csv" if source_file is not None else None,
+            "events.source_partition = %s",
+        ),
+        (is_fraud, "events.is_fraud = %s"),
+        (min_amount, "events.amount_cents >= ROUND(%s * 100)"),
+        (max_amount, "events.amount_cents <= ROUND(%s * 100)"),
+        (from_ts, "events.event_ts >= %s"),
+        (to_ts, "events.event_ts <= %s"),
     )
     for value, clause in filters:
         if value is not None:
             clauses.append(clause)
             parameters.append(value)
     if cursor:
-        cursor_ts, cursor_id = decode_cursor(cursor)
-        clauses.append("(event_ts, event_id) > (%s, %s)")
-        parameters.extend((cursor_ts, cursor_id))
+        clauses.append("events.event_id > %s")
+        parameters.append(decode_cursor(cursor))
     parameters.append(limit + 1)
 
     query = f"""
-        SELECT {", ".join(EVENT_COLUMNS)}
-        FROM risk.public_events
+        SELECT events.event_id, events.event_ts, merchants.merchant, categories.category,
+               (events.amount_cents::NUMERIC / 100)::NUMERIC(14, 2) AS amount,
+               events.is_fraud,
+               CASE WHEN events.source_partition THEN 'fraudTest.csv' ELSE 'fraudTrain.csv' END AS source_file
+        FROM risk.public_event_store AS events
+        JOIN risk.public_merchants AS merchants USING (merchant_id)
+        JOIN risk.public_categories AS categories USING (category_id)
         WHERE {" AND ".join(clauses)}
-        ORDER BY event_ts, event_id
+        ORDER BY events.event_id
         LIMIT %s
     """
     with psycopg.connect(app.state.database_url) as connection:
@@ -165,7 +181,7 @@ def events(
 
     has_more = len(rows) > limit
     page = rows[:limit]
-    next_cursor = encode_cursor(page[-1][1], page[-1][0]) if has_more and page else None
+    next_cursor = encode_cursor(page[-1][0]) if has_more and page else None
     return {
         "scope": "all allowlisted simulated event rows; identity-like source columns excluded",
         "dataset_rows": app.state.event_count,
@@ -177,10 +193,19 @@ def events(
 
 
 @app.get("/v1/events/{event_id}")
-def event(event_id: str) -> dict[str, object]:
+def event(event_id: int) -> dict[str, object]:
     with psycopg.connect(app.state.database_url) as connection:
         row = connection.execute(
-            f"SELECT {', '.join(EVENT_COLUMNS)} FROM risk.public_events WHERE event_id = %s",
+            """
+            SELECT events.event_id, events.event_ts, merchants.merchant, categories.category,
+                   (events.amount_cents::NUMERIC / 100)::NUMERIC(14, 2) AS amount,
+                   events.is_fraud,
+                   CASE WHEN events.source_partition THEN 'fraudTest.csv' ELSE 'fraudTrain.csv' END AS source_file
+            FROM risk.public_event_store AS events
+            JOIN risk.public_merchants AS merchants USING (merchant_id)
+            JOIN risk.public_categories AS categories USING (category_id)
+            WHERE events.event_id = %s
+            """,
             (event_id,),
         ).fetchone()
     if row is None:

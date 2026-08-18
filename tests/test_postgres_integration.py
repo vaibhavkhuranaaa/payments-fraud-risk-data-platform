@@ -71,15 +71,17 @@ class PostgresContractTests(unittest.TestCase):
         )
 
     def test_api_reader_role_reads_public_view_not_governed_table(self) -> None:
-        can_read_publication, can_read_public_events, can_read_events = (
+        can_read_publication, can_read_public_events, can_read_store, can_read_events = (
             self.connection.execute(
                 "SELECT has_table_privilege('risk_api', 'risk.public_demo_monitoring', 'SELECT'), "
                 "has_table_privilege('risk_api', 'risk.public_events', 'SELECT'), "
+                "has_table_privilege('risk_api', 'risk.public_event_store', 'SELECT'), "
                 "has_table_privilege('risk_api', 'risk.events', 'SELECT')"
             ).fetchone()
         )
         self.assertTrue(can_read_publication)
         self.assertTrue(can_read_public_events)
+        self.assertTrue(can_read_store)
         self.assertFalse(can_read_events)
 
     def test_public_event_view_is_read_only(self) -> None:

@@ -56,4 +56,4 @@ Loading, empty, unavailable, and refusal states preserve the same data boundary.
 
 The source is simulated, old, and not evidence of current attack behavior. Results use one holdout and no confidence intervals. No fairness study, threshold sweep, reviewer-time study, fraud-loss value, customer-friction analysis, live scoring, production feedback loop, or managed scale test is claimed.
 
-This revision is locally verified. Its measured database footprint is 2,266 MB, which exceeds the existing 500 MB tier. Updating the public demo requires an approved hosting, cost, and deployment decision.
+This revision is locally verified. The governed development database is 2,266 MB, but the normalized public store retains only the seven-field publication contract and occupies about 266 MB including indexes. That shape fits the existing 500 MB free tier with measured headroom. It does not turn a portfolio demonstration into a production system.

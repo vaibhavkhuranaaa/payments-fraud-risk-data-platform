@@ -27,14 +27,14 @@ The raw source remains local and Git-ignored. PostgreSQL constraints reject inva
 | PostgreSQL loader | Allowlisted source fields | Governed `risk.events` rows | Roll back the file transaction on validation or database failure |
 | Feature view | Governed event rows | Prior merchant and category history | Deterministic ordering by event time and event ID |
 | Evaluation job | Point-in-time feature view | Aggregate model and capacity evidence | No output is published when the job fails |
-| Publication job | Local monitoring summary | Two source-level aggregate rows | Upsert only the approved aggregate relation |
-| Public event view | Governed events | Seven allowlisted columns over every event | Read-only grant; identity-like source fields do not exist in the governed table |
+| Publication job | Governed events and monitoring summary | Normalized public store and two source-level aggregate rows | Load only the approved public contract |
+| Public event view | Compact event store and dictionaries | Seven allowlisted columns over every event | Read-only grant; identity-like source fields do not exist in the public store |
 | FastAPI | Public event view, aggregates, evaluation artifact | Health, events, monitoring, and evaluation JSON | Cursor and filter validation reject malformed or unbounded requests |
 | Next.js | Public read-only API | Analytical validation register | Shows explicit unavailable or empty states and never falls back to raw files |
 
 ## Data access
 
-The `risk_api` role can select from `risk.public_events` and `risk.public_demo_monitoring`. It cannot select from `risk.events`, feature views, or ingestion tables. The public event view contains only event ID, event time, merchant, category, amount, fraud label, and source partition. API values are parameterized, pages are cursor-based, and each request returns at most 100 rows.
+The `risk_api` role can select from the compact publication tables, `risk.public_events`, and `risk.public_demo_monitoring`. It cannot select from `risk.events`, feature views, or ingestion tables. The public event view contains only event ID, event time, merchant, category, amount, fraud label, and source partition. API values are parameterized, pages are cursor-based, and each request returns at most 100 rows.
 
 ## Failure recovery
 
@@ -49,10 +49,10 @@ The `risk_api` role can select from `risk.public_events` and `risk.public_demo_m
 
 | Concern | Current evidence demo | Scaled design |
 | --- | --- | --- |
-| Storage | Local PostgreSQL with all event rows; legacy Supabase Free deployment with two aggregates | Managed PostgreSQL or warehouse sized above the measured 2,266 MB footprint |
+| Storage | Local governed PostgreSQL plus a 266 MB compact public store sized for Supabase Free | Managed PostgreSQL or warehouse with additional headroom, backups, and retention controls |
 | Compute | Local batch validation and evaluation | Scheduled container jobs with bounded retries and immutable inputs |
-| Serving | Local read-only API and dashboard; legacy aggregate deployment remains live | Public read-only API with abuse controls, connection pooling, and indexed cursor reads |
+| Serving | Read-only API and dashboard with indexed cursor reads | Public read-only API with stronger abuse controls, connection pooling, and service objectives |
 | Observability | Test logs, health endpoint, aggregate evidence | Structured run logs, freshness alerts, job metrics, and release tracing |
-| Cost | $0 monthly cap | Not provisioned; requires a new cost and teardown approval |
+| Cost | $0 monthly cap on existing free services | Any paid or production shape requires a new cost and teardown approval |
 
-The row-level public design is verified locally, not deployed. The existing 500 MB database tier cannot host the measured 2,266 MB database. Any provider, data, exposure, or cost change requires separate approval.
+The compact row-level design is verified locally at about 266 MB for all approved rows and indexes. The 2,266 MB governed development database remains local. Free-tier capacity, cold starts, and lack of production service objectives are explicit constraints.
