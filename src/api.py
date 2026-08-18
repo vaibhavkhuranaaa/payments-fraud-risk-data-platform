@@ -84,7 +84,10 @@ def health() -> dict[str, str]:
             connection.execute("SELECT 1")
     except Exception as error:
         raise HTTPException(status_code=503, detail="database unavailable") from error
-    return {"status": "ok"}
+    source_sha = os.environ.get("RENDER_GIT_COMMIT") or os.environ.get(
+        "SOURCE_COMMIT", "local"
+    )
+    return {"status": "ok", "source_sha": source_sha}
 
 
 @app.get("/v1/monitoring")

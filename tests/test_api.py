@@ -100,7 +100,10 @@ class ApiTests(unittest.TestCase):
         from src.api import app
 
         with TestClient(app) as client:
-            self.assertEqual(client.get("/health").json(), {"status": "ok"})
+            self.assertEqual(
+                client.get("/health").json(),
+                {"status": "ok", "source_sha": "local"},
+            )
             monitoring = client.get("/v1/monitoring")
             evaluation = client.get("/v1/evaluation")
         self.assertEqual(monitoring.status_code, 200)

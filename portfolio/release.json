@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "status": "enabled",
+  "provider": "Render Free, Vercel Hobby, and Supabase Free",
+  "workflow": "auto-publish-project.yml",
+  "deploymentTarget": "payments-risk-api and payments-fraud-risk-dashboard",
+  "publicProject": true,
+  "paidResource": false,
+  "costApprovalRequired": false,
+  "verification": {
+    "url": "https://payments-risk-api.onrender.com/health",
+    "sourceShaField": "source_sha"
+  },
+  "evidenceGates": [
+    "project-manifest-v2-publication-validation",
+    "portfolio-preview-build",
+    "owner-approved-case-study-publication",
+    "default-branch-and-live-revision-alignment"
+  ]
+}
