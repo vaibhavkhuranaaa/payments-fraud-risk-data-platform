@@ -57,3 +57,5 @@ docs/NEXT_CHAT_PROMPT.md
 docs/resume-instructions.md
 scripts/project_kit.py
 .vscode/tasks.json
+.project/
+data/

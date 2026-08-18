@@ -1,4 +1,4 @@
-# Release runbook — approval required before execution
+# Release runbook: approval required before execution
 
 ## What is ready locally
 

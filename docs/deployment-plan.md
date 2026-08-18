@@ -1,4 +1,4 @@
-# Deployment plan — hiring-manager-ready risk data platform
+# Deployment plan: hiring-manager-ready risk data platform
 
 ## Target architecture
 

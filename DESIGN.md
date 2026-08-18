@@ -15,7 +15,7 @@ typography:
     fontSize: "clamp(2.4rem, 5vw, 5.6rem)"
     fontWeight: 700
     lineHeight: 0.94
-    letterSpacing: "-0.055em"
+    letterSpacing: "-0.04em"
   body:
     fontFamily: "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
     fontSize: "1rem"
