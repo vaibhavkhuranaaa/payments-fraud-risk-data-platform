@@ -6,7 +6,7 @@
   "outcome": "Retain the ordinary logistic baseline for the measured 1% review queue. It reaches 0.160 PR-AUC and 51.3% recall while the class-weighted challenger performs worse on ranking, recall, and probability error.",
   "industries": ["Financial services", "Payments risk"],
   "categories": ["Analytics", "Data Engineering", "AI/ML"],
-  "stack": ["Python", "PostgreSQL", "scikit-learn", "FastAPI", "Next.js", "TypeScript", "Supabase", "Render", "Vercel"],
+  "stack": ["Python", "PostgreSQL", "scikit-learn", "Supabase", "FastAPI", "Next.js", "TypeScript", "Render", "Vercel"],
   "githubUrl": "https://github.com/vaibhavkhuranaaa/payments-fraud-risk-data-platform",
   "liveUrl": "https://payments-fraud-risk-dashboard.vercel.app",
   "deployment": {
@@ -29,20 +29,20 @@
     "100-row maximum page size with indexed cursor pagination"
   ],
   "stages": [
-    "Validate the approved simulated source, license record, schema, ordering, nulls, and label domain",
-    "Load governed PostgreSQL events with deterministic IDs and idempotent ingestion records",
-    "Build merchant and category history using window frames that stop before the current event",
-    "Evaluate ordinary and class-weighted logistic policies on the later chronological partition",
-    "Normalize every event into a compact seven-column public store with least-privilege reads",
-    "Serve bounded event queries, aggregate monitoring, evaluation evidence, and explicit failure states"
+    "Validate approved simulated source before governed use",
+    "Load events and prior-row features with deterministic PostgreSQL contracts",
+    "Compare baseline and challenger on a chronological holdout",
+    "Normalize the complete public store within the data boundary",
+    "Serve bounded read-only event queries and fixed evidence",
+    "Present the decision, capacity, and failure states in Next.js"
   ],
   "architecture": [
-    "Local source validation and PostgreSQL ingestion preserve lineage while raw files remain untracked",
-    "Prior-row-only feature views prevent current-event labels from leaking into model inputs",
-    "A chronological batch evaluation produces fixed baseline and challenger evidence rather than live scores",
-    "A normalized Supabase PostgreSQL store contains every allowlisted event and dedicated filter indexes",
-    "FastAPI exposes read-only cursor queries, event detail, aggregate monitoring, evaluation, and source revision health",
-    "Next.js presents the release decision, capacity constraints, event register, evidence, and unavailable states"
+    "Source validation rejects schema drift and null analytical fields",
+    "Governed PostgreSQL load builds prior-row history without current-event leakage",
+    "Chronological evaluation compares baseline and challenger at fixed capacity",
+    "Compact Supabase store retains every allowlisted simulated event",
+    "FastAPI enforces cursor pagination and bounded parameterized filters",
+    "Next.js register exposes decisions, evidence, queries, and failure states"
   ],
   "evaluation": [
     "Both policies train on 1,296,675 earlier events and evaluate on 555,719 later events",
@@ -315,8 +315,12 @@
       {"check": "Live source revision and database health", "command": "curl -fsS https://payments-risk-api.onrender.com/health", "evidenceRef": "deployment.live"}
     ],
     "architecture": [
-      {"label": "Decision and monitoring register", "detail": "The stakeholder view leads with the retained policy, complete public scope, fixed analyst capacity, and model comparison.", "image": "docs/images/dashboard-overview.png", "alt": "Desktop fraud-risk dashboard with release disposition, public scope, and model evidence"},
-      {"label": "Full-row analytical query", "detail": "The technical view exposes bounded filters, cursor pagination, allowlisted event fields, and explicit public boundary notes.", "image": "docs/images/dashboard-event-query.png", "alt": "Desktop event register with filters, paginated simulated events, and field boundary disclosure"}
+      {"label": "Source validation", "detail": "Schema, license, ordering, null, and label checks reject an invalid source before any row enters governed storage.", "image": "docs/images/dashboard-overview.png", "alt": "Desktop fraud-risk dashboard with release disposition, public scope, and model evidence"},
+      {"label": "Governed event history", "detail": "Deterministic event IDs make repeated loads idempotent, while SQL window frames stop before the current event to prevent leakage.", "image": "docs/images/dashboard-event-query.png", "alt": "Desktop event register with filters, paginated simulated events, and field boundary disclosure"},
+      {"label": "Chronological evaluation", "detail": "Both logistic policies use the same six approved inputs and the same later holdout, so ranking, recall, and Brier comparisons remain like-for-like.", "image": "docs/images/dashboard-overview.png", "alt": "Desktop fraud-risk dashboard with release disposition, public scope, and model evidence"},
+      {"label": "Compact public store", "detail": "Dictionary encoding and integer amounts retain all 1,852,394 allowlisted rows and supporting indexes in a measured 286 MB database.", "image": "docs/images/dashboard-event-query.png", "alt": "Desktop event register with filters, paginated simulated events, and field boundary disclosure"},
+      {"label": "Bounded read API", "detail": "Parameterized filters, stable cursors, a 100-row ceiling, and a least-privilege role keep anonymous event queries bounded.", "image": "docs/images/dashboard-event-query.png", "alt": "Desktop event register with filters, paginated simulated events, and field boundary disclosure"},
+      {"label": "Analytical register", "detail": "The server-rendered interface connects the model disposition, event queries, analyst capacity, data boundary, and explicit unavailable states.", "image": "docs/images/dashboard-overview.png", "alt": "Desktop fraud-risk dashboard with release disposition, public scope, and model evidence"}
     ]
   }
 }
