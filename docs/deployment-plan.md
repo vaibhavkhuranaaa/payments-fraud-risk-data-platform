@@ -4,7 +4,7 @@
 
 `local approved raw source -> local validation and feature job -> managed PostgreSQL allowlisted event view -> public read-only FastAPI -> Next.js dashboard`
 
-The release candidate is an analytical demonstration over simulated events. It never blocks, approves, declines, or investigates a real payment. Raw files and synthetic cardholder-like fields remain local-only.
+The public release is an analytical demonstration over simulated events. It never blocks, approves, declines, or investigates a real payment. Raw files and synthetic cardholder-like fields remain local-only.
 
 ## Milestones
 
@@ -29,11 +29,11 @@ The release candidate is an analytical demonstration over simulated events. It n
 The existing free services predate decision 0006 and are the approved publication target:
 
 - Supabase Free project `elhhydpltongfdziroio` in Ohio receives the compact public store.
-- Render Free API `https://payments-risk-api.onrender.com` serves the protected aggregate contract.
-- Vercel Hobby dashboard `https://payments-fraud-risk-dashboard.vercel.app` renders that aggregate contract.
-- The prior aggregate revision remains the rollback target until the full-row release passes deployed verification.
+- Render Free API `https://payments-risk-api.onrender.com` serves the bounded full-row and aggregate contracts.
+- Vercel Hobby dashboard `https://payments-fraud-risk-dashboard.vercel.app` renders the full event register and fixed evaluation evidence.
+- The prior aggregate revision remains available in provider deployment history as the rollback target.
 
-Only an exact remote row count, endpoint checks, and deployed-source verification count as evidence that the full-row architecture is public.
+The release passed exact remote row counts, endpoint checks, responsive browser checks, and deployed-source verification.
 
 ## Approved $0 deployment decision
 

@@ -8,7 +8,7 @@ How can a fraud-risk data product support an analyst queue decision while provin
 
 The selected Sparkov dataset is simulated and listed as CC0 1.0 by its provider. Its two local files contain 1,852,394 events from January 2019 through December 2020. Only event time, merchant, category, amount, and fraud label enter the governed analytical schema. Synthetic cardholder-like identifiers, names, addresses, demographics, and location fields are prohibited.
 
-Raw files remain local and Git-ignored. The release candidate publishes all 1,852,394 events through a seven-column view: generated event ID, event time, merchant, category, amount, fraud label, and source partition. Identity-like source fields, raw rows, features, model scores, and payment actions remain excluded.
+Raw files remain local and Git-ignored. The public release exposes all 1,852,394 events through a seven-column view: generated event ID, event time, merchant, category, amount, fraud label, and source partition. Identity-like source fields, raw rows, features, model scores, and payment actions remain excluded.
 
 ## Engineering approach
 
@@ -56,4 +56,4 @@ Loading, empty, unavailable, and refusal states preserve the same data boundary.
 
 The source is simulated, old, and not evidence of current attack behavior. Results use one holdout and no confidence intervals. No fairness study, threshold sweep, reviewer-time study, fraud-loss value, customer-friction analysis, live scoring, production feedback loop, or managed scale test is claimed.
 
-This revision is locally verified. The governed development database is 2,266 MB, but the normalized public store retains only the seven-field publication contract and occupies about 266 MB including indexes. That shape fits the existing 500 MB free tier with measured headroom. It does not turn a portfolio demonstration into a production system.
+This revision is verified locally and on the public free-tier deployment. The governed development database is 2,266 MB, but the normalized hosted database retains only the publication contract and occupies 286 MB including all rows and indexes. That shape fits the existing 500 MB free tier with measured headroom. It does not turn a portfolio demonstration into a production system.

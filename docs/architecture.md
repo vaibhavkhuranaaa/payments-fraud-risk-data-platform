@@ -49,10 +49,10 @@ The `risk_api` role can select from the compact publication tables, `risk.public
 
 | Concern | Current evidence demo | Scaled design |
 | --- | --- | --- |
-| Storage | Local governed PostgreSQL plus a 266 MB compact public store sized for Supabase Free | Managed PostgreSQL or warehouse with additional headroom, backups, and retention controls |
+| Storage | Local governed PostgreSQL plus a 286 MB hosted compact database on Supabase Free | Managed PostgreSQL or warehouse with additional headroom, backups, and retention controls |
 | Compute | Local batch validation and evaluation | Scheduled container jobs with bounded retries and immutable inputs |
 | Serving | Read-only API and dashboard with indexed cursor reads | Public read-only API with stronger abuse controls, connection pooling, and service objectives |
 | Observability | Test logs, health endpoint, aggregate evidence | Structured run logs, freshness alerts, job metrics, and release tracing |
 | Cost | $0 monthly cap on existing free services | Any paid or production shape requires a new cost and teardown approval |
 
-The compact row-level design is verified locally at about 266 MB for all approved rows and indexes. The 2,266 MB governed development database remains local. Free-tier capacity, cold starts, and lack of production service objectives are explicit constraints.
+The compact row-level design is verified locally and publicly at 286 MB in the hosted database for all approved rows and indexes. The 2,266 MB governed development database remains local. Free-tier capacity, cold starts, and lack of production service objectives are explicit constraints.
