@@ -20,7 +20,7 @@ The public experience makes the data boundary visible: all 1,852,394 simulated e
 
 ## Operating Context
 
-An analyst queries the 1,852,394-event simulated analytical source, assesses a fixed-capacity review queue, and reviews model calibration and monthly alert distribution. The release candidate exposes row-level analytical fields plus fixed evaluation evidence.
+An analyst queries the 1,852,394-event simulated analytical source, assesses a fixed-capacity review queue, and reviews model calibration and monthly alert distribution. The public release exposes row-level analytical fields plus fixed evaluation evidence.
 
 ## Capabilities and Constraints
 

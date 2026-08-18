@@ -2,9 +2,9 @@
 
 [![Quality](https://github.com/vaibhavkhuranaaa/payments-fraud-risk-data-platform/actions/workflows/quality.yml/badge.svg)](https://github.com/vaibhavkhuranaaa/payments-fraud-risk-data-platform/actions/workflows/quality.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-1857c9.svg)](LICENSE)
-[![Live demo](https://img.shields.io/badge/demo-legacy%20aggregate-b94c31.svg)](https://payments-fraud-risk-dashboard.vercel.app)
+[![Live demo](https://img.shields.io/badge/demo-full%20event%20register-1857c9.svg)](https://payments-fraud-risk-dashboard.vercel.app)
 
-Status: locally verified release candidate. The live demo remains the earlier approved release until this revision receives deployment approval.
+Status: live and locally reproducible. The public demo exposes all 1,852,394 allowlisted simulated events through bounded read-only queries.
 
 ![Fraud-risk validation register showing release evidence, public event queries, and capacity constraints](docs/images/dashboard-overview.png)
 
@@ -59,7 +59,7 @@ The converged local evaluation completed in 24.73 seconds on one machine. This i
 
 ## Scaling
 
-The full-row release candidate uses a normalized PostgreSQL publication store with indexed, cursor-paginated reads. All 1,852,394 allowlisted events, dictionaries, and indexes occupy about 266 MB locally. The wider governed development database remains local. This compact boundary fits the existing 500 MB free database tier while preserving about 224 MB of measured headroom. Free-tier capacity and availability remain demonstration constraints, not production claims.
+The deployed full-row release uses a normalized PostgreSQL publication store with indexed, cursor-paginated reads. All 1,852,394 allowlisted events, dictionaries, and indexes occupy 286 MB in the hosted database. The wider governed development database remains local. This compact boundary fits the existing 500 MB free database tier with 214 MB of measured headroom. Free-tier capacity and availability remain demonstration constraints, not production claims.
 
 ## Run locally
 
