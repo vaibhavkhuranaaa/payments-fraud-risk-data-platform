@@ -6,7 +6,8 @@ import unittest
 import psycopg
 
 
-class PostgresIntegrationTests(unittest.TestCase):
+@unittest.skipUnless(os.environ.get("DATABASE_URL"), "DATABASE_URL is required")
+class PostgresContractTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         url = os.environ.get("DATABASE_URL")
@@ -24,14 +25,10 @@ class PostgresIntegrationTests(unittest.TestCase):
         self.assertFalse(columns & prohibited)
         self.assertTrue({"event_id", "event_ts", "merchant", "category", "amount", "is_fraud"} <= columns)
 
-    def test_loaded_events_are_idempotent_and_public_view_is_aggregate_only(self) -> None:
-        total, distinct_total = self.connection.execute("SELECT count(*), count(DISTINCT event_id) FROM risk.events").fetchone()
-        self.assertEqual(total, distinct_total)
-        self.assertEqual(total, 1_852_394)
+    def test_public_view_is_aggregate_only(self) -> None:
         public_columns = {row[0] for row in self.connection.execute("SELECT column_name FROM information_schema.columns WHERE table_schema = 'risk' AND table_name = 'public_monitoring_summary'").fetchall()}
         self.assertNotIn("event_id", public_columns)
         self.assertNotIn("merchant", public_columns)
-        self.assertEqual(self.connection.execute("SELECT count(*) FROM risk.public_monitoring_summary").fetchone()[0], 2)
 
     def test_api_reader_role_is_limited_to_aggregate_monitoring(self) -> None:
         can_read_publication, can_read_events = self.connection.execute(
@@ -60,6 +57,37 @@ class PostgresIntegrationTests(unittest.TestCase):
                 "last_event_at",
                 "published_at",
             },
+        )
+
+
+@unittest.skipUnless(
+    os.environ.get("DATABASE_URL") and os.environ.get("FULL_DATA_VALIDATION") == "1",
+    "full approved source validation requires DATABASE_URL and FULL_DATA_VALIDATION=1",
+)
+class FullDataIntegrationTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.connection = psycopg.connect(os.environ["DATABASE_URL"])
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls.connection.close()
+
+    def test_loaded_events_are_idempotent_and_point_in_time_features_are_complete(self) -> None:
+        total, distinct_total = self.connection.execute(
+            "SELECT count(*), count(DISTINCT event_id) FROM risk.events"
+        ).fetchone()
+        self.assertEqual(total, distinct_total)
+        self.assertEqual(total, 1_852_394)
+        self.assertEqual(
+            self.connection.execute("SELECT count(*) FROM risk.event_features").fetchone()[0],
+            total,
+        )
+
+    def test_full_aggregate_publication_has_two_source_partitions(self) -> None:
+        self.assertEqual(
+            self.connection.execute("SELECT count(*) FROM risk.public_monitoring_summary").fetchone()[0],
+            2,
         )
         self.assertEqual(
             self.connection.execute("SELECT count(*) FROM risk.public_demo_monitoring").fetchone()[0],

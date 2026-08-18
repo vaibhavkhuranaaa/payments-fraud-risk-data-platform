@@ -29,6 +29,8 @@ export type EvaluationModel = {
 export type Evaluation = {
   split: string;
   review_rate: number;
+  holdout_rows?: number;
+  features?: string[];
   models: Record<string, EvaluationModel>;
 };
 

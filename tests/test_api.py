@@ -3,11 +3,38 @@ from __future__ import annotations
 import os
 import unittest
 
+import psycopg
 from fastapi.testclient import TestClient
 
 
 @unittest.skipUnless(os.environ.get("DATABASE_URL"), "DATABASE_URL is required")
 class ApiTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        with psycopg.connect(os.environ["DATABASE_URL"]) as connection:
+            existing = connection.execute(
+                "SELECT count(*) FROM risk.public_demo_monitoring"
+            ).fetchone()[0]
+            if existing:
+                return
+            connection.executemany(
+                """
+                INSERT INTO risk.public_demo_monitoring
+                  (source_file, event_count, fraud_count, fraud_rate, first_event_at, last_event_at)
+                VALUES (%s, %s, %s, %s, %s, %s)
+                ON CONFLICT (source_file) DO UPDATE SET
+                  event_count = EXCLUDED.event_count,
+                  fraud_count = EXCLUDED.fraud_count,
+                  fraud_rate = EXCLUDED.fraud_rate,
+                  first_event_at = EXCLUDED.first_event_at,
+                  last_event_at = EXCLUDED.last_event_at
+                """,
+                [
+                    ("fraudTrain.csv", 100, 1, 0.01, "2020-01-01", "2020-01-31"),
+                    ("fraudTest.csv", 50, 1, 0.02, "2020-02-01", "2020-02-29"),
+                ],
+            )
+
     def test_health_and_aggregate_contracts(self) -> None:
         os.environ["API_KEY"] = "test-api-key"
         from src.api import app

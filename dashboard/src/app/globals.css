@@ -32,5 +32,86 @@ a {
   text-decoration: none;
 }
 
-button { font: inherit; }
-button:focus-visible, a:focus-visible { outline: 3px solid #b94c31; outline-offset: 3px; }
+button,
+select,
+input {
+  font: inherit;
+}
+
+button:focus-visible,
+select:focus-visible,
+input:focus-visible,
+a:focus-visible {
+  outline: 3px solid #b94c31;
+  outline-offset: 3px;
+}
+
+.route-state {
+  min-height: 100vh;
+  padding: 14vh clamp(22px, 8vw, 120px);
+  background: #edf1ed;
+  color: #152126;
+}
+
+.route-state__kicker {
+  color: #005e5d;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.route-state h1 {
+  max-width: 16ch;
+  margin-top: 14px;
+  font-size: clamp(2.6rem, 6vw, 5.5rem);
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+}
+
+.route-state > p:not(.route-state__kicker) {
+  max-width: 62ch;
+  margin-top: 22px;
+  color: #40545a;
+  line-height: 1.6;
+}
+
+.route-state button {
+  margin-top: 28px;
+  border: 0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  background: #152126;
+  color: #fff;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.route-state button:hover {
+  background: #005e5d;
+}
+
+.route-state__progress {
+  width: min(420px, 100%);
+  height: 3px;
+  margin-top: 34px;
+  overflow: hidden;
+  background: #c6d1cb;
+}
+
+.route-state__progress span {
+  display: block;
+  width: 42%;
+  height: 100%;
+  background: #005e5d;
+  animation: loading-progress 1.3s cubic-bezier(0.16, 1, 0.3, 1) infinite alternate;
+}
+
+@keyframes loading-progress {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(240%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-state__progress span { animation: none; }
+}
