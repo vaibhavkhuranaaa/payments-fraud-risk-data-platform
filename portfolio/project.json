@@ -2,48 +2,321 @@
   "version": 2,
   "slug": "payments-fraud-risk-data-platform",
   "title": "Payments Fraud Risk Data Platform",
-  "status": "release-candidate",
-  "summary": "Governed local-first fraud-risk monitoring and capacity-aware analyst triage over a simulated source.",
-  "outcome": "Retain the ordinary logistic baseline for the measured 1% review queue; reject the class-weighted challenger.",
-  "repositoryUrl": "https://github.com/vaibhavkhuranaaa/payments-fraud-risk-data-platform",
+  "summary": "A governed fraud-risk validation register that publishes all 1,852,394 allowlisted simulated events for bounded analytical queries while keeping identity-like fields, model scores, and payment actions out of the public system.",
+  "outcome": "Retain the ordinary logistic baseline for the measured 1% review queue. It reaches 0.160 PR-AUC and 51.3% recall while the class-weighted challenger performs worse on ranking, recall, and probability error.",
+  "industries": ["Financial services", "Payments risk"],
+  "categories": ["Analytics", "Data Engineering", "AI/ML"],
+  "stack": ["Python", "PostgreSQL", "scikit-learn", "FastAPI", "Next.js", "TypeScript", "Supabase", "Render", "Vercel"],
+  "githubUrl": "https://github.com/vaibhavkhuranaaa/payments-fraud-risk-data-platform",
   "liveUrl": "https://payments-fraud-risk-dashboard.vercel.app",
-  "license": "MIT",
-  "topics": [
-    "data-engineering",
-    "fraud-detection",
-    "model-monitoring",
-    "postgresql",
-    "fastapi",
-    "nextjs"
-  ],
-  "source": {
-    "name": "Sparkov simulated credit-card transactions",
-    "license": "CC0 1.0",
-    "rows": 1852394,
-    "dataBoundary": "All 1,852,394 simulated events are public through an allowlisted seven-column view. Raw files, identity-like source fields, features, scores, and payment actions remain excluded."
+  "deployment": {
+    "provider": "Render Free, Vercel Hobby, and Supabase Free",
+    "status": "live",
+    "runtime": "Read-only FastAPI service, server-rendered Next.js dashboard, and compact indexed PostgreSQL publication store",
+    "exposure": "anonymous",
+    "productionClaim": false,
+    "verifiedAt": "2026-08-18T06:25:22Z",
+    "expiresAt": null,
+    "evidenceRefs": ["deployment.live", "publication.boundary", "delivery.quality"]
   },
-  "metrics": {
-    "baselinePrAuc": 0.15994693158012935,
-    "challengerPrAuc": 0.1119652197832344,
-    "baselineRecallAtOnePercent": 0.5128205128205128,
-    "challengerRecallAtOnePercent": 0.4540792540792541,
-    "baselineBrier": 0.004042453962457449,
-    "challengerBrier": 0.0766933014123528,
-    "reviewSlots": 5557
+  "metrics": [
+    "1,852,394 validated simulated events and matching point-in-time feature rows",
+    "1,852,394 publicly queryable rows through seven allowlisted fields",
+    "Baseline PR-AUC 0.1599 versus challenger PR-AUC 0.1120 on a 555,719-row chronological holdout",
+    "Baseline recall 51.3% at a fixed 1% review rate, representing 5,557 analyst slots",
+    "Baseline Brier score 0.0040 versus challenger Brier score 0.0767",
+    "286 MB hosted publication database including every public row and supporting index",
+    "100-row maximum page size with indexed cursor pagination"
+  ],
+  "stages": [
+    "Validate the approved simulated source, license record, schema, ordering, nulls, and label domain",
+    "Load governed PostgreSQL events with deterministic IDs and idempotent ingestion records",
+    "Build merchant and category history using window frames that stop before the current event",
+    "Evaluate ordinary and class-weighted logistic policies on the later chronological partition",
+    "Normalize every event into a compact seven-column public store with least-privilege reads",
+    "Serve bounded event queries, aggregate monitoring, evaluation evidence, and explicit failure states"
+  ],
+  "architecture": [
+    "Local source validation and PostgreSQL ingestion preserve lineage while raw files remain untracked",
+    "Prior-row-only feature views prevent current-event labels from leaking into model inputs",
+    "A chronological batch evaluation produces fixed baseline and challenger evidence rather than live scores",
+    "A normalized Supabase PostgreSQL store contains every allowlisted event and dedicated filter indexes",
+    "FastAPI exposes read-only cursor queries, event detail, aggregate monitoring, evaluation, and source revision health",
+    "Next.js presents the release decision, capacity constraints, event register, evidence, and unavailable states"
+  ],
+  "evaluation": [
+    "Both policies train on 1,296,675 earlier events and evaluate on 555,719 later events",
+    "Six inputs are approved: amount, merchant, category, and three prior-row history features",
+    "PR-AUC measures rare-event ranking, recall at 1% measures fixed-capacity coverage, and Brier score measures aggregate probability error",
+    "The baseline beats the class-weighted challenger on all three reported measures",
+    "One chronological holdout supports the release decision but does not establish stability across populations or time periods",
+    "Calibration remains uneven, so model scores are not presented as reliable payment probabilities"
+  ],
+  "operationalTradeoffs": [
+    "Publishing every simulated row improves auditability but requires bounded pages, indexed filters, and abuse controls.",
+    "The compact 286 MB public store fits the current free database tier with measured headroom but has no production capacity guarantee.",
+    "The governed 2,266 MB development database remains local because features and lineage fields are outside the public boundary.",
+    "The read-only service may cold-start or pause on free infrastructure and has no service-level objective.",
+    "The model evidence is a fixed offline comparison, not a live scoring, payment approval, or payment decline system."
+  ],
+  "disclaimer": "This public demonstration uses simulated 2019 to 2020 payment events. It is not a production fraud system, does not score a live payment, and does not make an approval, decline, or other payment decision.",
+  "dataDisclosure": {
+    "source": "Sparkov simulated credit-card transactions, 1,852,394 rows across the approved training and test files",
+    "license": "CC0 1.0 as listed by the source provider",
+    "classification": "synthetic",
+    "permittedUse": "Reproducible fraud-risk analysis, data-platform demonstration, model comparison, and public portfolio presentation",
+    "includedFields": ["deterministic event ID", "event timestamp", "merchant", "category", "amount", "simulated fraud label", "source partition"],
+    "excludedFields": ["raw source files", "identity-like source fields", "location fields", "point-in-time features", "model scores", "credentials", "payment actions"],
+    "deployedArtifactContents": ["1,852,394 compact allowlisted event rows", "merchant and category dictionaries", "source-level aggregate monitoring", "fixed baseline and challenger evaluation evidence", "indexed read-only query paths"]
   },
   "evidence": [
-    "docs/images/dashboard-overview.png",
-    "docs/images/dashboard-event-query.png",
-    "docs/images/dashboard-mobile.png",
-    "data/validated/evaluation.json",
-    "data/validated/pipeline-validation.json",
-    "docs/architecture.md",
-    "docs/metric-glossary.md"
+    {
+      "id": "data.source",
+      "kind": "disclosure",
+      "claim": "The approved source contains 1,852,394 rows, two strict chronological partitions, binary labels, and no nulls in allowlisted analytical fields.",
+      "source": "data/validated/sparkov-source-profile.json",
+      "method": "Deterministic validation of the two approved local files against the recorded source contract",
+      "result": 1852394,
+      "scope": "Sparkov simulated credit-card transactions",
+      "execution": "deterministic"
+    },
+    {
+      "id": "pipeline.integrity",
+      "kind": "test",
+      "claim": "The governed load has 1,852,394 unique events and matching prior-row feature rows with no prohibited analytical fields.",
+      "source": "data/validated/pipeline-validation.json",
+      "method": "Full-volume PostgreSQL count, duplicate-ID, point-in-time, and schema checks",
+      "result": true,
+      "scope": "Governed local PostgreSQL pipeline",
+      "execution": "integration"
+    },
+    {
+      "id": "evaluation.model",
+      "kind": "evaluation",
+      "claim": "The ordinary logistic baseline exceeds the class-weighted challenger on PR-AUC, recall at a fixed 1% review rate, and Brier score.",
+      "source": "data/validated/evaluation.json",
+      "method": "Common six-feature training design and chronological holdout comparison over the complete approved source",
+      "result": "retain baseline; reject challenger",
+      "scope": "555,719-event chronological holdout",
+      "execution": "deterministic",
+      "caveat": "One simulated holdout without confidence intervals or threshold sweep"
+    },
+    {
+      "id": "publication.boundary",
+      "kind": "security",
+      "claim": "Every simulated event is publicly queryable through seven allowlisted fields while raw files, identity-like fields, features, scores, and payment actions remain excluded.",
+      "source": "docs/decisions/0006-publish-all-allowlisted-event-rows.md and migrations/005_compact_public_store.sql",
+      "method": "Information-schema, row-count, role-privilege, write-denial, and endpoint contract checks",
+      "result": 1852394,
+      "scope": "Supabase Free compact publication database and Render read-only API",
+      "execution": "live"
+    },
+    {
+      "id": "query.performance",
+      "kind": "benchmark",
+      "claim": "The remote default event page uses the compact primary-key index, while source, merchant, category, and fraud filters use dedicated indexes.",
+      "source": "docs/architecture.md",
+      "method": "EXPLAIN ANALYZE over the deployed compact event store",
+      "result": "0.177 ms default page plan",
+      "scope": "Representative bounded read-only queries",
+      "execution": "live",
+      "caveat": "Query-plan evidence is not an end-to-end service latency guarantee"
+    },
+    {
+      "id": "delivery.quality",
+      "kind": "test",
+      "claim": "The release passes pinned Python lint, PostgreSQL migrations, API contracts, dashboard lint, production build, and responsive browser checks.",
+      "source": ".github/workflows/quality.yml and docs/images",
+      "method": "Clean local gate, GitHub Actions, and Chromium verification at 1440px and 390px",
+      "result": true,
+      "execution": "integration"
+    },
+    {
+      "id": "deployment.live",
+      "kind": "deployment",
+      "claim": "The complete public register is live on the approved zero-dollar Render, Vercel, and Supabase services.",
+      "source": "https://payments-fraud-risk-dashboard.vercel.app",
+      "method": "Endpoint contract checks, deployed source comparison, responsive browser verification, and provider error-log review",
+      "result": true,
+      "observedAt": "2026-08-18T06:25:22Z",
+      "environment": "Render Free, Vercel Hobby, and Supabase Free",
+      "execution": "live",
+      "caveat": "Free-tier availability, cold starts, and capacity limits apply"
+    }
   ],
-  "limitations": [
-    "Simulated 2019 to 2020 source",
-    "One chronological holdout without confidence intervals",
-    "No live scoring or payment decision",
-    "No fairness analysis or threshold sweep"
-  ]
+  "story": {
+    "recruiterSummary": "A fraud-risk analyst can inspect the complete 1,852,394-row simulated event register, filter and page through bounded public records, compare baseline and challenger evidence, and see exactly why the ordinary logistic policy is retained for a fixed 1% review queue.",
+    "technicalNarrative": "The product separates governed development data from public analytical data. Local validation locks the approved source and loads deterministic events into PostgreSQL. Window frames end one row before the current event, creating point-in-time merchant and category history without current-label leakage. Both logistic policies share those inputs and a chronological holdout. Publication then normalizes every event into a compact seven-column store whose read-only role cannot access the wider development tables. FastAPI enforces parameterized filters, cursor pagination, and a 100-row ceiling, while Next.js exposes the decision, event evidence, monitoring, and explicit unavailable states.",
+    "scalabilityRoadmap": [
+      "Add gateway rate limits, connection pooling, request telemetry, and service objectives before materially higher public traffic.",
+      "Move batch validation and evaluation into scheduled immutable jobs only after defining freshness, retry, retention, and alert ownership.",
+      "Add new chronological windows, confidence intervals, threshold sweeps, and delayed-label monitoring before revisiting the model policy.",
+      "Move beyond the free 500 MB database tier only with a new capacity review, cost approval, backup plan, and teardown condition."
+    ],
+    "executiveSummary": "The ordinary logistic baseline is the stronger measured review policy. On the 555,719-event later partition it reaches 0.160 PR-AUC, 51.3% recall at a fixed 1% review rate, and a 0.004 Brier score. The class-weighted challenger falls to 0.112 PR-AUC, 45.4% recall, and a 0.077 Brier score. The dashboard makes that disposition auditable against all 1,852,394 allowlisted simulated events without presenting a live payment score or action.",
+    "intendedUser": "A fraud-risk analyst or data-platform reviewer assessing offline model evidence, review capacity, and publication controls.",
+    "example": {
+      "title": "Auditing the measured 1% review queue",
+      "steps": ["Confirm that the baseline is retained and the challenger is rejected", "Compare PR-AUC, recall at 1% review, and Brier score on the same chronological holdout", "Inspect the 5,557-slot monthly workload rather than interpreting the queue as an automated action", "Filter the complete public register by merchant, category, source, amount, time, or fraud label", "Check the seven-field disclosure boundary and the raw fields that remain excluded", "Read calibration, holdout, and free-tier limitations before drawing a conclusion"]
+    },
+    "technologyDecisions": [
+      {
+        "technology": "Prior-row PostgreSQL window features",
+        "rationale": "Historical merchant and category behavior is computed at the event timestamp without using the current event or label.",
+        "alternative": "Precompute features in an unversioned dataframe",
+        "tradeoff": "The SQL contract is explicit and reproducible but the wider governed database remains local."
+      },
+      {
+        "technology": "Chronological baseline and challenger evaluation",
+        "rationale": "A later source partition tests the policies against future simulated events and keeps the comparison capacity-aware.",
+        "alternative": "Random split or highest single metric",
+        "tradeoff": "One chronological holdout is more realistic than a random split but does not quantify variance."
+      },
+      {
+        "technology": "Normalized compact public store",
+        "rationale": "Dictionary encoding and integer amounts fit all approved rows plus indexes inside the existing free database tier.",
+        "alternative": "Publish the 2,266 MB governed development schema",
+        "tradeoff": "The compact store removes features and lineage detail from public queries by design."
+      },
+      {
+        "technology": "FastAPI cursor pagination",
+        "rationale": "Stable indexed cursors and a fixed 100-row ceiling keep anonymous full-row access bounded.",
+        "alternative": "Unbounded downloads or offset pagination",
+        "tradeoff": "Visitors query the complete population incrementally rather than downloading it in one response."
+      }
+    ],
+    "evidence": [
+      {
+        "value": "1,852,394",
+        "label": "Public simulated events",
+        "context": "Every approved source row is represented through seven allowlisted analytical fields.",
+        "method": "Remote count reconciliation, source totals, schema inspection, and privilege checks.",
+        "meaning": "The public register is complete within its disclosed field boundary.",
+        "evidenceRefs": ["data.source", "publication.boundary"]
+      },
+      {
+        "value": "0.160 PR-AUC",
+        "label": "Retained baseline ranking quality",
+        "context": "The class-weighted challenger reaches 0.112 on the same 555,719-event chronological holdout.",
+        "method": "Common features, training data, holdout, and evaluation code for both policies.",
+        "meaning": "Class weighting does not improve the measured ranking policy.",
+        "evidenceRefs": ["evaluation.model"]
+      },
+      {
+        "value": "51.3%",
+        "label": "Fraud-label recall at 1% review",
+        "context": "The measured queue contains 5,557 events; the challenger reaches 45.4% recall at the same capacity.",
+        "method": "Deterministic score ranking on the chronological holdout.",
+        "meaning": "The retained policy captures more simulated fraud labels without expanding analyst capacity.",
+        "evidenceRefs": ["evaluation.model"]
+      },
+      {
+        "value": "286 MB",
+        "label": "Hosted full-row publication store",
+        "context": "All rows, dictionaries, and query indexes remain inside the existing 500 MB free database tier.",
+        "method": "Remote PostgreSQL size measurement after exact row reconciliation.",
+        "meaning": "Normalization makes the complete approved register feasible at zero incremental cost.",
+        "evidenceRefs": ["publication.boundary", "query.performance"]
+      }
+    ],
+    "limitations": [
+      "The source is simulated and covers January 2019 through December 2020.",
+      "Evidence comes from one chronological holdout without confidence intervals.",
+      "The challenger is a class-weighted configuration of the same model family, not a distinct algorithm.",
+      "Calibration is uneven, so scores are not reliable payment probabilities.",
+      "No fairness analysis, threshold sweep, delayed-label feedback loop, or production drift study is claimed.",
+      "No live scoring, approval, decline, or automated payment action exists.",
+      "Free-tier services may cold-start, pause, or reach capacity and have no uptime guarantee."
+    ]
+  },
+  "resume": {
+    "bulletCandidates": [
+      {
+        "role": "Data Engineering",
+        "bullet": "Built a governed PostgreSQL pipeline over 1,852,394 simulated payment events with deterministic ingestion, prior-row-only features, zero duplicate IDs, and a compact seven-column publication store containing every approved row.",
+        "evidenceRefs": ["data.source", "pipeline.integrity", "publication.boundary"]
+      },
+      {
+        "role": "Model Validation",
+        "bullet": "Compared ordinary and class-weighted logistic policies on a 555,719-event chronological holdout and retained the baseline after it reached 0.160 PR-AUC, 51.3% recall at 1% capacity, and a 0.004 Brier score.",
+        "evidenceRefs": ["evaluation.model"]
+      },
+      {
+        "role": "Analytics Product",
+        "bullet": "Shipped a decision-focused validation register with full-row filters, cursor pagination, capacity evidence, aggregate monitoring, and explicit loading, empty, and unavailable states across desktop and mobile.",
+        "evidenceRefs": ["delivery.quality", "deployment.live"]
+      },
+      {
+        "role": "Platform Governance",
+        "bullet": "Published all 1,852,394 allowlisted simulated events on zero-dollar services while excluding raw files, identity-like fields, features, scores, and payment actions through least-privilege database and API controls.",
+        "evidenceRefs": ["publication.boundary", "deployment.live"]
+      }
+    ]
+  },
+  "presentation": {
+    "question": "Which measured fraud-risk policy best uses a fixed analyst queue, and can the decision be audited against every approved simulated event?",
+    "answer": "Retain the ordinary logistic baseline. It outperforms the class-weighted challenger on ranking, fixed-capacity recall, and probability error, and the complete 1,852,394-row allowlisted register is publicly queryable for audit.",
+    "decisionSupported": "Assess an offline fraud-risk review policy and inspect its evidence without making a live payment decision.",
+    "architectureAlt": "Approved simulated files flow through validation, deterministic PostgreSQL ingestion, prior-row feature views, chronological model evaluation, a compact public event store, a read-only FastAPI service, and a Next.js validation register.",
+    "evaluationMode": "Earlier 1,296,675-row training partition and later 555,719-row chronological holdout at a fixed 1% review rate",
+    "publicationStatus": "The full allowlisted event register, fixed model evidence, public API, and analytical dashboard are live on existing zero-dollar services.",
+    "licenseNote": "The Sparkov simulated source is listed as CC0 1.0 and is not redistributed from this repository.",
+    "coverImage": "docs/images/dashboard-overview.png",
+    "coverAlt": "Fraud-risk validation register showing the retained baseline, public event scope, and model evidence",
+    "technologyRoles": {
+      "Python": "Source validation, deterministic ingestion orchestration, evaluation, and release checks",
+      "PostgreSQL": "Governed events, prior-row features, compact public storage, constraints, and indexes",
+      "scikit-learn": "Ordinary and class-weighted logistic policy comparison",
+      "FastAPI": "Bounded read-only queries, detail lookup, monitoring, evaluation, and release health",
+      "Next.js": "Server-rendered analytical validation register and explicit failure states",
+      "Supabase, Render, and Vercel": "Existing zero-dollar database, API, and dashboard services"
+    },
+    "quickStart": [
+      {"label": "Run the governed local stack", "command": "docker compose up -d postgres"},
+      {"label": "Validate the source", "command": "uv run python scripts/validate_sparkov_source.py"},
+      {"label": "Run the full-volume checks", "command": "DATABASE_URL=postgresql://postgres:postgres@localhost:54329/risk_demo FULL_DATA_VALIDATION=1 uv run python -m unittest discover -s tests -v"},
+      {"label": "Build the dashboard", "command": "cd dashboard && npm run build"}
+    ],
+    "securityControls": [
+      {
+        "control": "Seven-field publication allowlist",
+        "implementation": "The compact public store contains only event ID, time, merchant, category, amount, simulated fraud label, and source partition.",
+        "evidenceRefs": ["publication.boundary"],
+        "limitation": "The database provider retains operator privileges outside the application-role boundary."
+      },
+      {
+        "control": "Least-privilege read path",
+        "implementation": "The runtime role can read the public store and monitoring view but cannot read governed development tables or write records.",
+        "evidenceRefs": ["publication.boundary"],
+        "limitation": "Anonymous service availability and abuse protection remain constrained by free-tier controls."
+      },
+      {
+        "control": "Bounded parameterized queries",
+        "implementation": "FastAPI validates filters and cursors, parameterizes SQL, and caps every event page at 100 rows.",
+        "evidenceRefs": ["delivery.quality", "query.performance"],
+        "limitation": "A higher-traffic release would need gateway throttling and connection pooling."
+      }
+    ],
+    "costBoundaries": [
+      {"component": "Supabase PostgreSQL", "boundary": "Existing 500 MB free database tier; measured database size is 286 MB", "implication": "Additional data, replicas, backups, or a paid tier require a new capacity and cost approval."},
+      {"component": "Render API", "boundary": "Existing Free web service with no paid instance or uptime objective", "implication": "Cold starts and pauses are accepted demonstration constraints."},
+      {"component": "Vercel dashboard", "boundary": "Existing Hobby project with no paid feature", "implication": "The dashboard remains a portfolio demonstration rather than an operational service."}
+    ],
+    "repositoryStructure": [
+      {"path": "contracts/ and scripts/", "purpose": "Source boundary, validation, migrations, evaluation, and publication workflows"},
+      {"path": "migrations/", "purpose": "Governed schema, point-in-time views, least-privilege access, and compact public storage"},
+      {"path": "src/", "purpose": "Deterministic ingestion and the bounded read-only FastAPI service"},
+      {"path": "dashboard/", "purpose": "Decision-focused Next.js validation register"},
+      {"path": "data/validated/ and docs/", "purpose": "Public aggregate evidence, decisions, disclosure, architecture, and release guidance"}
+    ],
+    "verification": [
+      {"check": "Python lint and service contracts", "command": "uv run --group dev ruff check . && DATABASE_URL=postgresql://postgres:postgres@localhost:54329/risk_demo uv run --group dev python -m unittest discover -s tests -v", "evidenceRef": "delivery.quality"},
+      {"check": "Dashboard lint and production build", "command": "cd dashboard && npm run lint && npm run build", "evidenceRef": "delivery.quality"},
+      {"check": "Live source revision and database health", "command": "curl -fsS https://payments-risk-api.onrender.com/health", "evidenceRef": "deployment.live"}
+    ],
+    "architecture": [
+      {"label": "Decision and monitoring register", "detail": "The stakeholder view leads with the retained policy, complete public scope, fixed analyst capacity, and model comparison.", "image": "docs/images/dashboard-overview.png", "alt": "Desktop fraud-risk dashboard with release disposition, public scope, and model evidence"},
+      {"label": "Full-row analytical query", "detail": "The technical view exposes bounded filters, cursor pagination, allowlisted event fields, and explicit public boundary notes.", "image": "docs/images/dashboard-event-query.png", "alt": "Desktop event register with filters, paginated simulated events, and field boundary disclosure"}
+    ]
+  }
 }
