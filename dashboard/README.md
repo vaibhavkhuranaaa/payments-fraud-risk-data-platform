@@ -1,6 +1,6 @@
 # Dashboard
 
-Server-rendered Next.js evidence desk for the aggregate-only analyst-triage demonstration.
+Server-rendered Next.js validation register for the aggregate-only analyst-triage demonstration.
 
 ## Runtime contract
 

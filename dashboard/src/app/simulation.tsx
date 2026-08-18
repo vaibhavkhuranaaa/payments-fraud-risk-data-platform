@@ -42,10 +42,10 @@ export function CapacityScenario({
   const isMeasured = rate === measuredRate;
 
   return (
-    <section className={styles.capacity} aria-labelledby="capacity-title">
+    <section className={styles.capacity} aria-labelledby="capacity-title" id="capacity">
       <div className={styles.sectionLead}>
-        <p className={styles.kicker}>Capacity decision</p>
-        <h2 id="capacity-title">Size the review queue without inventing performance</h2>
+        <p className={styles.kicker}>CONTROL 02 / CAPACITY</p>
+        <h2 id="capacity-title">Queue planning scenario</h2>
         <p>
           Change the planning rate to see workload. Recall remains visible only for the measured
           1% policy because no other threshold sweep is available.
@@ -121,8 +121,8 @@ export function Simulation() {
   return (
     <section className={styles.simulation} aria-labelledby="simulation-title" id="queue">
       <div className={styles.sectionLead}>
-        <p className={styles.kicker}>Safe analyst workflow</p>
-        <h2 id="simulation-title">Synthetic review queue</h2>
+        <p className={styles.kicker}>CONTROL 01 / REVIEW BLOTTER</p>
+        <h2 id="simulation-title">Synthetic analyst queue</h2>
         <p>
           Generate deterministic demonstration signals and record review progress in this browser.
           Nothing is fetched, persisted, scored, approved, or declined.
@@ -131,9 +131,9 @@ export function Simulation() {
       <div className={styles.simulator}>
         <div className={styles.simulatorTop}>
           <div>
-            <span className={styles.liveDot} aria-hidden="true" />
-            <strong>{running ? "Streaming" : "Paused"}</strong>
-            <small>browser-generated only</small>
+            <span>STREAM STATE</span>
+            <strong>{running ? "RUNNING" : "PAUSED"}</strong>
+            <small>/ browser-generated only</small>
           </div>
           <button
             type="button"
@@ -156,16 +156,21 @@ export function Simulation() {
           </select>
           <span>{visibleSignals.length} shown</span>
         </div>
+        <div className={styles.signalHeader} aria-hidden="true">
+          <span>Signal / channel</span>
+          <span>Illustrative evidence</span>
+          <span>Review state</span>
+        </div>
         <ul className={styles.signalList} aria-live="polite" aria-label="Synthetic signals">
           {visibleSignals.map((signal) => {
             const isReviewed = reviewed.has(signal.id);
             return (
               <li className={styles.signal} key={signal.id}>
-                <div>
+                <div data-label="Signal">
                   <strong>{signal.id}</strong>
                   <span>{signal.channel}</span>
                 </div>
-                <div>
+                <div data-label="Evidence">
                   <span>{signal.amountBand}</span>
                   <span>{signal.reason}</span>
                 </div>

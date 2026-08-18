@@ -1,3 +1,10 @@
+/*
+THESIS: A validation register, not a portfolio dashboard; the queue and decision evidence lead.
+OWN-WORLD: Cool institutional paper, carbon rules, cobalt selection, amber exceptions, square controls.
+STORY: Verify the release decision, test capacity, inspect the synthetic queue, then audit evidence and boundary.
+FIRST VIEWPORT: A 216px register index frames a compact disposition strip and full-width operations blotter.
+FORM: Queue-blotter-first, ranked second and selected for analyst scan speed; seed f162bd09.
+*/
 import styles from "./page.module.css";
 import { CapacityScenario, Simulation } from "./simulation";
 import {
@@ -29,8 +36,8 @@ function Lineage() {
   return (
     <section className={styles.lineage} aria-labelledby="lineage-title" id="boundary">
       <div className={styles.sectionLead}>
-        <p className={styles.kicker}>Data boundary</p>
-        <h2 id="lineage-title">One workflow, two deliberately different data zones</h2>
+        <p className={styles.kicker}>CONTROL 04 / DATA BOUNDARY</p>
+        <h2 id="lineage-title">Local processing and public evidence are separate zones</h2>
         <p>
           The complete simulated source is processed locally. Public hosting is limited to
           source-level aggregates and fixed evaluation evidence.
@@ -169,9 +176,9 @@ function EvaluationSection({ evaluation }: { evaluation: Evaluation }) {
     <section className={styles.evaluation} aria-labelledby="evaluation-title" id="evaluation">
       <div className={styles.sectionLead}>
         <div>
-          <p className={styles.kicker}>Evaluation annex</p>
+          <p className={styles.kicker}>EVIDENCE 03 / MODEL COMPARISON</p>
           <h2 id="evaluation-title">
-            The baseline wins the stated constraint. It is not production-ready.
+            Baseline outperforms the challenger at the measured queue constraint
           </h2>
         </div>
         <p>
@@ -246,112 +253,113 @@ function Dashboard({ monitoring, evaluation }: { monitoring: Monitoring; evaluat
   return (
     <main className={styles.shell}>
       <header className={styles.header}>
-        <a href="#top" className={styles.wordmark}>Payments risk / evidence desk</a>
-        <nav aria-label="Dashboard sections">
-          <a href="#queue">Queue</a>
-          <a href="#evaluation">Evaluation</a>
-          <a href="#boundary">Boundary</a>
-        </nav>
+        <a href="#top" className={styles.wordmark}>Payments risk validation register</a>
+        <span className={styles.headerRef}>REGISTER / FR-2026-08</span>
         <span className={styles.status}>
-          <i aria-hidden="true" /> Aggregate-only analyst triage
+          PUBLIC SCOPE: AGGREGATE ONLY
         </span>
       </header>
-      <section className={styles.intro} id="top">
-        <div>
-          <p className={styles.kicker}>Aggregate monitoring · fixed evaluation · safe interaction</p>
-          <h1>
-            See the evidence.
-            <br />
-            See the boundary.
-          </h1>
-        </div>
-        <p>
-          A locally processed, simulated fraud source becomes a capacity-aware review decision.
-          Public interaction stays synthetic and the hosted data stays aggregate.
-        </p>
-      </section>
-      <section className={styles.facts} aria-label="Evidence summary">
-        <div>
-          <span>Local source processed</span>
-          <strong>{integer.format(totals.events)}</strong>
-          <small>simulated events, never hosted as records</small>
-        </div>
-        <div>
-          <span>Chronological holdout</span>
-          <strong>{integer.format(holdout?.event_count ?? 0)}</strong>
-          <small>{date(firstEvent)} through {date(lastEvent)}</small>
-        </div>
-        <div>
-          <span>Measured review capacity</span>
-          <strong>{percent.format(evaluation.review_rate)}</strong>
-          <small>{integer.format(baseline.alert_volume)} baseline review slots</small>
-        </div>
-        <div>
-          <span>Public monitoring</span>
-          <strong>{monitoring.sources.length}</strong>
-          <small>approved source-level aggregate rows</small>
-        </div>
-      </section>
-      <section className={styles.decision} aria-labelledby="decision-title">
-        <div>
-          <p className={styles.kicker}>Release decision</p>
-          <h2 id="decision-title">Retain the baseline for the measured 1% review queue.</h2>
-        </div>
-        <dl>
-          <div>
-            <dt>Recall advantage</dt>
-            <dd>+{(recallLift * 100).toFixed(1)} percentage points</dd>
+      <div className={styles.appBody}>
+        <aside className={styles.register} aria-label="Evidence register">
+          <div className={styles.registerTitle}>
+            <span>CONTROL INDEX</span>
+            <strong>FR / 08</strong>
           </div>
-          <div>
-            <dt>PR-AUC</dt>
-            <dd>{baseline.pr_auc.toFixed(3)} vs {challenger.pr_auc.toFixed(3)}</dd>
-          </div>
-          <div>
-            <dt>Guardrail</dt>
-            <dd>Analyst review only</dd>
-          </div>
-        </dl>
-      </section>
-      <CapacityScenario
-        measuredRate={evaluation.review_rate}
-        measuredVolume={baseline.alert_volume}
-        measuredRecall={baseline.recall_at_review_rate}
-      />
-      <Simulation />
-      <EvaluationSection evaluation={evaluation} />
-      <Lineage />
-      <section className={styles.ledger} id="evidence">
-        <div className={styles.sectionLead}>
-          <p className={styles.kicker}>Published monitoring evidence</p>
-          <h2>Two source-level aggregates, not a full-data browser view</h2>
-          <p>
-            The published ledger proves lineage and coverage while keeping the local event source
-            outside the public boundary.
+          <nav aria-label="Register sections">
+            <a href="#top"><b>00</b> Disposition</a>
+            <a href="#queue"><b>01</b> Review queue</a>
+            <a href="#capacity"><b>02</b> Capacity</a>
+            <a href="#evaluation"><b>03</b> Model evidence</a>
+            <a href="#boundary"><b>04</b> Data boundary</a>
+            <a href="#evidence"><b>05</b> Publication ledger</a>
+          </nav>
+          <dl className={styles.registerFacts}>
+            <div><dt>Source class</dt><dd>Simulated</dd></div>
+            <div><dt>Evaluation</dt><dd>Chronological</dd></div>
+            <div><dt>Queue policy</dt><dd>Fixed at 1%</dd></div>
+            <div><dt>Action scope</dt><dd>Analyst review</dd></div>
+          </dl>
+          <p className={styles.registerLimit}>
+            No raw records, identifiers, scores, approvals, or declines.
           </p>
-        </div>
-        <div className={styles.table} role="table" aria-label="Approved aggregate source partitions">
-          <div className={`${styles.tableRow} ${styles.tableHeader}`} role="row">
-            <span role="columnheader">Source partition</span>
-            <span role="columnheader">Events</span>
-            <span role="columnheader">Labelled fraud rate</span>
-            <span role="columnheader">Period</span>
-          </div>
-          {monitoring.sources.map((source) => (
-            <div className={styles.tableRow} role="row" key={source.source_file}>
-              <span role="cell" data-label="Source">{source.source_file.replace(".csv", "")}</span>
-              <span role="cell" data-label="Events">{integer.format(source.event_count)}</span>
-              <span role="cell" data-label="Fraud rate">{percent.format(source.fraud_rate)}</span>
-              <span role="cell" data-label="Period">
-                {date(source.first_event_at)} to {date(source.last_event_at)}
-              </span>
+        </aside>
+
+        <div className={styles.workspace}>
+          <section className={styles.workspaceTitle} id="top" aria-labelledby="page-title">
+            <div>
+              <p className={styles.kicker}>MODEL VALIDATION / ANALYST TRIAGE DEMONSTRATION</p>
+              <h1 id="page-title">Fraud risk control review</h1>
+              <p>
+                Fixed holdout evidence, constrained review capacity, and aggregate-only publication.
+              </p>
             </div>
-          ))}
+            <dl>
+              <div><dt>Coverage</dt><dd>{date(firstEvent)} to {date(lastEvent)}</dd></div>
+              <div><dt>Holdout</dt><dd>{integer.format(holdout?.event_count ?? 0)} events</dd></div>
+              <div><dt>Review date</dt><dd>17 Aug 2026</dd></div>
+            </dl>
+          </section>
+
+          <section className={styles.disposition} aria-labelledby="decision-title">
+            <div className={styles.dispositionLabel}>
+              <span>RELEASE DISPOSITION</span>
+              <strong>RETAIN BASELINE</strong>
+              <p id="decision-title">Measured 1% analyst-review queue only. Not production-ready.</p>
+            </div>
+            <dl className={styles.dispositionMetrics}>
+              <div><dt>Recall at 1%</dt><dd>{percent.format(baseline.recall_at_review_rate)}<small>+{(recallLift * 100).toFixed(1)} pp vs challenger</small></dd></div>
+              <div><dt>PR-AUC</dt><dd>{baseline.pr_auc.toFixed(3)}<small>challenger {challenger.pr_auc.toFixed(3)}</small></dd></div>
+              <div><dt>Brier</dt><dd>{baseline.brier_score.toFixed(3)}<small>challenger {challenger.brier_score.toFixed(3)}</small></dd></div>
+              <div><dt>Review slots</dt><dd>{integer.format(baseline.alert_volume)}<small>chronological holdout</small></dd></div>
+            </dl>
+          </section>
+
+          <div className={styles.operations}>
+            <Simulation />
+            <CapacityScenario
+              measuredRate={evaluation.review_rate}
+              measuredVolume={baseline.alert_volume}
+              measuredRecall={baseline.recall_at_review_rate}
+            />
+          </div>
+          <EvaluationSection evaluation={evaluation} />
+          <Lineage />
+          <section className={styles.ledger} id="evidence">
+            <div className={styles.sectionLead}>
+              <p className={styles.kicker}>EVIDENCE 05 / PUBLICATION LEDGER</p>
+              <h2>Approved aggregate source partitions</h2>
+              <p>
+                These two rows prove coverage and lineage. They do not expose the local event source.
+              </p>
+            </div>
+            <div className={styles.table} role="table" aria-label="Approved aggregate source partitions">
+              <div className={`${styles.tableRow} ${styles.tableHeader}`} role="row">
+                <span role="columnheader">Source partition</span>
+                <span role="columnheader">Events</span>
+                <span role="columnheader">Labelled fraud rate</span>
+                <span role="columnheader">Period</span>
+              </div>
+              {monitoring.sources.map((source) => (
+                <div className={styles.tableRow} role="row" key={source.source_file}>
+                  <span role="cell" data-label="Source">{source.source_file.replace(".csv", "")}</span>
+                  <span role="cell" data-label="Events">{integer.format(source.event_count)}</span>
+                  <span role="cell" data-label="Fraud rate">{percent.format(source.fraud_rate)}</span>
+                  <span role="cell" data-label="Period">{date(source.first_event_at)} to {date(source.last_event_at)}</span>
+                </div>
+              ))}
+              <div className={styles.tableTotal}>
+                <span>LOCAL SOURCE TOTAL</span>
+                <strong>{integer.format(totals.events)}</strong>
+                <small>{integer.format(totals.fraud)} labelled fraud events</small>
+              </div>
+            </div>
+          </section>
+          <footer className={styles.footer}>
+            <span>PUBLIC: aggregate monitoring + fixed evaluation evidence</span>
+            <span>LOCAL: raw simulated source + full pipeline</span>
+          </footer>
         </div>
-      </section>
-      <footer className={styles.footer}>
-        <span>Hosted: aggregate monitoring and evaluation evidence</span>
-        <span>Local only: raw simulated source and full pipeline</span>
-      </footer>
+      </div>
     </main>
   );
 }

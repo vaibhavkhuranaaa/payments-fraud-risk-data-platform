@@ -35,7 +35,7 @@ Calibration is uneven across fixed score bands. Monthly review volume ranges fro
 
 ## Analyst experience
 
-The evidence desk leads with the model-selection decision and its review-capacity constraint. Analysts can compare 0.5%, 1%, and 2% workload scenarios. Only the 1% scenario displays measured recall; other settings explicitly say performance was not measured.
+The validation register leads with the model-selection decision, its review-capacity constraint, and the synthetic analyst queue. Analysts can compare 0.5%, 1%, and 2% workload scenarios. Only the 1% scenario displays measured recall; other settings explicitly say performance was not measured.
 
 A deterministic synthetic queue supports start, pause, filter, record-review, and reopen-review interactions. Those signals stay in browser memory. No control scores, approves, declines, retrieves, or alters a payment.
 

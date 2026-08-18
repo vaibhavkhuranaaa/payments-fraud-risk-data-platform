@@ -14,7 +14,7 @@ Approved simulated CSV files
   -> chronological baseline and challenger evaluation
   -> aggregate publication table and fixed evaluation artifact
   -> protected FastAPI endpoints
-  -> server-rendered Next.js evidence desk
+  -> server-rendered Next.js validation register
 ```
 
 The raw source remains local and Git-ignored. PostgreSQL constraints reject invalid amounts and labels. Deterministic event IDs make a repeated load idempotent. Window frames end one row before the current event, so history features are available at the event timestamp without using the current label.
@@ -29,7 +29,7 @@ The raw source remains local and Git-ignored. PostgreSQL constraints reject inva
 | Evaluation job | Point-in-time feature view | Aggregate model and capacity evidence | No output is published when the job fails |
 | Publication job | Local monitoring summary | Two source-level aggregate rows | Upsert only the approved aggregate relation |
 | FastAPI | Aggregate relation and evaluation artifact | Health, monitoring, and evaluation JSON | Data endpoints require a server-side key; missing evidence returns 503 |
-| Next.js | Protected aggregate API | Analyst evidence desk | Shows explicit unavailable or empty states and never falls back to raw data |
+| Next.js | Protected aggregate API | Analyst validation register | Shows explicit unavailable or empty states and never falls back to raw data |
 
 ## Data access
 

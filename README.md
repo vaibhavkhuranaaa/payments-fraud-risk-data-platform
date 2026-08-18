@@ -1,12 +1,12 @@
 # Payments Fraud Risk Data Platform
 
 [![Quality](https://github.com/vaibhavkhuranaaa/payments-fraud-risk-data-platform/actions/workflows/quality.yml/badge.svg)](https://github.com/vaibhavkhuranaaa/payments-fraud-risk-data-platform/actions/workflows/quality.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-005e5d.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-1857c9.svg)](LICENSE)
 [![Live demo](https://img.shields.io/badge/demo-aggregate--only-b94c31.svg)](https://payments-fraud-risk-dashboard.vercel.app)
 
 Status: locally verified release candidate. The live demo remains the earlier approved release until this revision receives deployment approval.
 
-![Analyst evidence desk showing the selected baseline, review capacity, and aggregate boundary](docs/images/dashboard-overview.png)
+![Fraud-risk validation register showing the release disposition, synthetic review queue, and capacity constraint](docs/images/dashboard-overview.png)
 
 ## What it does
 
@@ -28,7 +28,7 @@ Decision: retain the ordinary logistic baseline for the measured 1% review queue
 Local approved source -> PostgreSQL validation and prior-row features
                       -> chronological model evaluation
                       -> aggregate-only publication -> protected FastAPI
-                                                     -> Next.js evidence desk
+                                                     -> Next.js validation register
 ```
 
 Raw files, prohibited source fields, event-level records, and scores remain outside the public system. The API role can read only the aggregate publication table. See [the full architecture](docs/architecture.md) and [scope](docs/scope.md).

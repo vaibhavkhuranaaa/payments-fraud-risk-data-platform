@@ -12,7 +12,7 @@ A payments-risk analyst or reviewer assesses whether a model policy provides use
 - A chronological train and holdout split.
 - Baseline and class-weighted logistic policies evaluated on the same holdout.
 - PR-AUC, recall at fixed review capacity, Brier score, calibration bins, and monthly alert volume.
-- Aggregate source monitoring, protected read-only APIs, and a responsive analyst evidence desk.
+- Aggregate source monitoring, protected read-only APIs, and a responsive analyst validation register.
 - Deterministic browser-only queue signals for safe interaction.
 - Loading, empty, unavailable, and refusal states.
 
