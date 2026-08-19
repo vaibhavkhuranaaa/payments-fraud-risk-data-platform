@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: payments-risk-api
+    runtime: docker
+    plan: free
+    region: ohio
+    branch: main
+    autoDeploy: false
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        sync: false

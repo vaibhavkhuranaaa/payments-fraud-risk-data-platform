@@ -1,0 +1,27 @@
+{
+  "feature_rows": 1852394,
+  "duplicate_event_ids": 0,
+  "invalid_point_in_time_features": 0,
+  "analytical_source_fields": [
+    "trans_date_trans_time",
+    "merchant",
+    "category",
+    "amt",
+    "is_fraud"
+  ],
+  "feature_columns": [
+    "event_id",
+    "event_ts",
+    "merchant",
+    "category",
+    "amount",
+    "is_fraud",
+    "source_file",
+    "source_sha256",
+    "merchant_prior_transaction_count",
+    "merchant_prior_amount_mean",
+    "category_prior_transaction_count"
+  ],
+  "prohibited_fields_present": false,
+  "result": "pass"
+}

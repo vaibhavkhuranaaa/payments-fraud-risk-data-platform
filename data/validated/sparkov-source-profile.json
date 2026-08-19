@@ -1,0 +1,68 @@
+{
+  "source": "kartik2112/fraud-detection",
+  "source_version": 1,
+  "analytical_allowlist": [
+    "trans_date_trans_time",
+    "merchant",
+    "category",
+    "amt",
+    "is_fraud"
+  ],
+  "files": {
+    "fraudTrain.csv": {
+      "sha256": "fd7139200dbfcbed0b6742bbe05a4f1abce532c4fef20918228a651647a3e75d",
+      "rows": 1296675,
+      "label_counts": {
+        "non_fraud": 1289169,
+        "fraud": 7506
+      },
+      "fraud_rate": 0.005788651743883394,
+      "time_range_utc": {
+        "start": "2019-01-01 00:00:18",
+        "end": "2020-06-21 12:13:37"
+      },
+      "allowlisted_field_null_counts": {
+        "trans_date_trans_time": 0,
+        "merchant": 0,
+        "category": 0,
+        "amt": 0,
+        "is_fraud": 0
+      },
+      "amount": {
+        "min": 1.0,
+        "max": 28948.9,
+        "mean": 70.35103545606833
+      },
+      "distinct_merchants": 693,
+      "distinct_categories": 14
+    },
+    "fraudTest.csv": {
+      "sha256": "12d553ab19440c752d2531ee1af44bb64f12cc3d3839f1649f19e81c230545f0",
+      "rows": 555719,
+      "label_counts": {
+        "non_fraud": 553574,
+        "fraud": 2145
+      },
+      "fraud_rate": 0.0038598644278853163,
+      "time_range_utc": {
+        "start": "2020-06-21 12:14:25",
+        "end": "2020-12-31 23:59:34"
+      },
+      "allowlisted_field_null_counts": {
+        "trans_date_trans_time": 0,
+        "merchant": 0,
+        "category": 0,
+        "amt": 0,
+        "is_fraud": 0
+      },
+      "amount": {
+        "min": 1.0,
+        "max": 22768.11,
+        "mean": 69.39281023323066
+      },
+      "distinct_merchants": 693,
+      "distinct_categories": 14
+    }
+  },
+  "temporal_split_valid": true
+}

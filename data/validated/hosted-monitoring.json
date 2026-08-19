@@ -1,0 +1,21 @@
+{
+  "scope": "aggregate analyst triage only; no payment decisions",
+  "sources": [
+    {
+      "source_file": "fraudTest.csv",
+      "event_count": 555719,
+      "fraud_count": 2145,
+      "fraud_rate": 0.00386,
+      "first_event_at": "2020-06-21T12:14:25+00:00",
+      "last_event_at": "2020-12-31T23:59:34+00:00"
+    },
+    {
+      "source_file": "fraudTrain.csv",
+      "event_count": 1296675,
+      "fraud_count": 7506,
+      "fraud_rate": 0.005789,
+      "first_event_at": "2019-01-01T00:00:18+00:00",
+      "last_event_at": "2020-06-21T12:13:37+00:00"
+    }
+  ]
+}
